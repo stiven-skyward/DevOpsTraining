@@ -27,7 +27,7 @@ Course Contents
 10. Load Balancer Solution With Nginx and SSL/TLS
 •	Secure load balancing with Nginx and SSL/TLS configurations.
 11. Ansible Configuration Management
-•	Automate configurations from Projects 7 to 10 using Ansible.
+•	Automate configurations using Ansible.
 12. Ansible Refactoring & Static Assignments (Imports and Roles)
 •	Advanced Ansible techniques including refactoring and role management.
 13. Ansible Dynamic Assignments (Include) and Community Roles
@@ -49,6 +49,7 @@ To begin with any of the courses:
 Clone this repository.
 Navigate to the specific project directory.
 Follow the instructions detailed in each project's folder.
+
 Contributing
 Contributions to this repository are welcome. Please fork the repository and submit pull requests to enhance the learning materials.
 
