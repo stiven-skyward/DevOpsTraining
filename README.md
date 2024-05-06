@@ -1,6 +1,4 @@
 # DevOpsTraining
- DevOps/Cloud Training Material
-# DevOpsTraining
 **DevOps/Cloud Training Material**
 
 ## WEB STACK IMPLEMENTATION COURSES IN AWS
