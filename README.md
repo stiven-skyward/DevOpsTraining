@@ -2,6 +2,7 @@
  DevOps/Cloud Training Material
 WEB STACK IMPLEMENTATION COURSES IN AWS
 Welcome to the comprehensive DevOps training repository focused on various web technology stacks and DevOps tools implemented in AWS. This course series is designed to take you through different stacks and technologies, helping you build robust knowledge and skills in web solutions and cloud technology.
+
 Course Contents
 1. WEB STACK IMPLEMENTATION (LAMP STACK) IN AWS
 •	Introduction to the LAMP stack: Linux, Apache, MySQL, PHP/Python/Perl.
@@ -41,13 +42,15 @@ Course Contents
 •	From containerizing applications with Docker to orchestrating with Kubernetes, and deploying a Kubernetes service using AWS EKS.
 25. Deploying and Packaging Applications into Kubernetes
 •	Techniques for managing and deploying applications in a Kubernetes environment.
+
 Getting Started
 To begin with any of the courses:
-1.	Clone this repository.
-2.	Navigate to the specific project directory.
-3.	Follow the instructions detailed in each project's folder.
+
+Clone this repository.
+Navigate to the specific project directory.
+Follow the instructions detailed in each project's folder.
 Contributing
 Contributions to this repository are welcome. Please fork the repository and submit pull requests to enhance the learning materials.
+
 License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
-
