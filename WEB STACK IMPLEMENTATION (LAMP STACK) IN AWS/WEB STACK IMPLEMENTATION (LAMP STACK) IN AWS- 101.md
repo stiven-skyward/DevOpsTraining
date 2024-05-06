@@ -61,6 +61,7 @@ The `chmod` (change mode) command is used to change the access permissions of fi
 
 ```bash
 chmod 755 example.txt
+```
 
 ### chown Command
 
@@ -68,3 +69,4 @@ The `chown` (change owner) command is used to change the ownership of a file or 
 
 ```bash
 chown user:group example.txt
+```
