@@ -71,4 +71,23 @@ The `chown` (change owner) command is used to change the ownership of a file or 
 chown user:group example.txt
 ```
 
+These commands are fundamental in a DevOps environment, especially when working in the cloud, for the security and proper operation of applications.
+
+## Networking: TCP and UDP
+
+TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are commonly used protocols in the transport layer of the OSI model, with key differences in how they handle communication:
+
+- **TCP:** is connection-oriented and ensures that all packets arrive intact and in the correct order.
+
+- **UDP:** is connectionless, does not guarantee packet delivery, and is ideal for applications that require speed and efficiency in data transmission.
+
+## Common Web Ports
+
+Here are some of the most common ports used in web applications:
+
+- **HTTP:** Port 80
+- **HTTPS:** Port 443
+- **SSH:** Port 22
+- **FTP:** Ports 20 and 21
+- **SFTP:** Port 22
 
