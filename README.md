@@ -6,7 +6,7 @@ Welcome to the comprehensive DevOps training repository focused on various web t
 
 ### Course Contents
 
-#### 1. [WEB STACK IMPLEMENTATION (LAMP STACK) IN AWS](https://github.com/stiven-skyward/DevOpsTraining/tree/main/WEB%20STACK%20IMPLEMENTATION%20(LAMP%20STACK)%20IN%20AWS)
+#### 1. [WEB STACK IMPLEMENTATION (LAMP STACK) IN AWS](https://github.com/stiven-skyward/DevOpsTraining/tree/main/WEB%20STACK%20IMPLEMENTATION%20IN%20AWS/LAMP%20STACK)
 
 - **Introduction to the LAMP stack:** Linux, Apache, MySQL, PHP/Python/Perl.
 - **Deployment and configuration basics on AWS.**
