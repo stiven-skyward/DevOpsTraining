@@ -41,15 +41,18 @@ Open PowerShell as an administrator and perform the following steps:
 ```powershell
 icacls C:\Path\To\Keys\My-Keys.pem /reset
 ```
+
 2. **Set the correct ownership. If unsure of the full username, use the `whoami` command in a CMD or PowerShell window, which will display the full username. For example, if `whoami` returns `COMPUTER-1234\john`:**
 ```powershell
 icacls C:\Path\To\Keys\My-Keys.pem /grant:r COMPUTER-1234\john:R
 ```
 Replace `COMPUTER-1234\john` with the result from `whoami`.
+
 3. **Remove inheritance to ensure no upper directory permissions are applied:**
 ```powershell
 icacls C:\Path\To\Keys\My-Keys.pem /inheritance:r
 ```
+
 4. **Verify the permissions again to confirm that only your user has access:**
 ```powershell
 icacls C:\Path\To\Keys\My-Keys.pem
