@@ -58,3 +58,9 @@ icacls C:\Path\To\Keys\My-Keys.pem /inheritance:r
 icacls C:\Path\To\Keys\My-Keys.pem
 ```
 With these steps, you should be able to configure the permissions properly and eliminate the error when attempting to connect via SSH.
+
+## Connect to the instance by running
+
+```powershell
+ssh -i <private-key-name>.pem ubuntu@<Public-IP-address>
+```
