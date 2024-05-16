@@ -67,3 +67,6 @@ curl -s http://169.254.169.254/latest/meta-data/public-ipv4
 The URL in the browser shall also work if you do not specify the port number since all web browsers use port 80 by default.
 
 If you see the following page, then your web server is now correctly installed and accessible through your firewall:
+
+![Apache-Default-Page](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/8aafed71-23a1-49b8-9764-3853f1b39555)
+
