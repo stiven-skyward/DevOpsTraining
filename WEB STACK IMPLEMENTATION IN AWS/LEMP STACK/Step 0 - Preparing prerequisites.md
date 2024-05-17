@@ -34,35 +34,47 @@ Download and install Git Bash from the [official Git website](https://gitforwind
 
 ### Connect to EC2 Instance
 
-You can change the `.pem` file permissions using Windows Command Prompt with administrative privileges:
+You can change the `.pem` file permissions using the Windows Subsystem for Linux (WSL):
 
-1. **Open Command Prompt as Administrator**:
-   - *Click on the Start menu, type `cmd`.*
-   - *Right-click on `Command Prompt` and select `Run as administrator`.*
+1. **Open PowerShell as Administrator**:
+   - *Click on the Start menu, type `PowerShell`.*
+   - *Right-click on `PowerShell` and select `Run as administrator`.*
 
-2. **Navigate to the Directory**:
-   - ```cmd
-     cd /Path-to-Your-private-key.pem/
+2. **Run the command**:
+   - ```powershell
+     wsl --install
      ```
-
-3. **Change File Permissions**:
-   - ```cmd
-     icacls My-Keys.pem /inheritance:r /grant:r %username%:R
+   - Follow the instructions and restart your computer once the process is completed.
+  
+3. **Open WSL Terminal and navigate to the directory**:
+   - ```sh
+     cd /mnt/Path-to-Your-private-key.pem/
      ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/828666a5-94c9-4cb3-be6f-4f0e22fc5741)
 
-Launch Git Bash as administrator and run the following commands to connect to your EC2 instance:
+4. **Copy the Key File to the WSL Home Directory**:
+   - ```sh
+     cp /mnt/d/DevOps/My-Keys.pem ~/
+     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/41db1959-4ef0-4d6e-a5b4-f940fea6f937)
+
+5. **Change File Permissions**:
+   - ```sh
+     chmod 400 ~/My-Keys.pem
+     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/0eec1422-44c5-46f3-b226-f007d775331d)
+
+Launch Git Bash as administrator and run the following command to connect to your EC2 instance:
 
 ```sh
 cd /Path-to-Your-private-key.pem/
 ```
-
-```sh
-chmod 400 Your-private-key.pem
-```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/574cd24c-d7ee-4144-a15b-c3adca554d33)
 
 ```sh
 ssh -i <Your-private-key.pem> ubuntu@<EC2-Public-IP-address>
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/fa190708-568f-4dfd-86e6-ead4bd51032e)
 
 Replace `<Your-private-key.pem>` with the path to your private key file and `<EC2-Public-IP-address>` with the public IP address of your EC2 instance.
 
