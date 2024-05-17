@@ -78,9 +78,9 @@ Nano is a simpler, user-friendly text editor. Here are some basic commands:
 
 ### Basic Nano Commands
 
-- **Cut Text:**: `Ctrl + K`
-- **Paste Text:**: `Ctrl + U`
-- **Search Text:**: `Ctrl + W`
-- **Go to Line:**: `Ctrl + _`
+- **Cut Text**: `Ctrl + K`
+- **Paste Text**: `Ctrl + U`
+- **Search Text**: `Ctrl + W`
+- **Go to Line**: `Ctrl + _`
 
 By becoming proficient in both VIM and Nano, you'll be well-prepared to handle text editing tasks efficiently in various environments.
