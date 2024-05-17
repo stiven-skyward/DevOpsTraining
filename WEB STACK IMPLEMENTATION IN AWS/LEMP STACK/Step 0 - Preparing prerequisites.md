@@ -45,6 +45,11 @@ You can change the `.pem` file permissions using Windows Command Prompt with adm
      cd /Path-to-Your-private-key.pem/
      ```
 
+3. **Change File Permissions**:
+   - ```cmd
+     icacls My-Keys.pem /inheritance:r /grant:r %username%:R
+     ```
+
 Launch Git Bash as administrator and run the following commands to connect to your EC2 instance:
 
 ```sh
