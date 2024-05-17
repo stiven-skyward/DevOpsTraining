@@ -36,11 +36,11 @@ Download and install Git Bash from the [official Git website](https://gitforwind
 
 You can change the `.pem` file permissions using Windows Command Prompt with administrative privileges:
 
-- 1. **Open Command Prompt as Administrator**:
+1. **Open Command Prompt as Administrator**:
    - *Click on the Start menu, type `cmd`.*
    - *Right-click on `Command Prompt` and select `Run as administrator`.*
- 
-- 2. **Navigate to the Directory**:
+
+2. **Navigate to the Directory**:
    - ```cmd
      cd /Path-to-Your-private-key.pem/
      ```
