@@ -13,11 +13,11 @@ We will create a database named `example_database` and a user named `example_use
 
 First, connect to the MySQL console using the root account:
 
-    $ sudo mysql
+    sudo mysql
 
 To create a new database, run the following command from your MySQL console:
 
-    mysql> CREATE DATABASE `example_database`;
+    CREATE DATABASE `example_database`;
 
 Now you can create a new user and grant them full privileges on the database you have just created.
 
@@ -39,7 +39,7 @@ Now exit the MySQL shell with:
 
 You can test if the new user has the proper permissions by logging in to the MySQL console again, this time using the custom user credentials:
 
-    $ mysql -u example_user -p
+    mysql -u example_user -p
 
 Notice the `-p` flag in this command, which will prompt you for the password used when creating the `example_user` user. After logging in to the MySQL console, confirm that you have access to the `example_database` database:
 
@@ -93,7 +93,7 @@ After confirming that you have valid data in your test table, you can exit the M
 
 Now you can create a PHP script that will connect to MySQL and query for your content. Create a new PHP file in your custom web root directory using your preferred editor. We’ll use `nano` for that:
 
-    $ nano /var/www/projectLEMP/todo_list.php
+    nano /var/www/projectLEMP/todo_list.php
 
 The following PHP script connects to the MySQL database, queries for the content of the `todo_list` table, and displays the results in a list. If there is a problem with the database connection, it will throw an exception.
 
