@@ -1,7 +1,6 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-+++
 # Step 5 - Testing PHP with Nginx
 
 Your LEMP stack should now be completely set up.
@@ -12,7 +11,7 @@ You can test it to validate that Nginx can correctly hand `.php` files off to yo
 
 You can do this by creating a test PHP file in your document root. Open a new file called `info.php` within your document root in your text editor:
 
-    $ nano /var/www/projectLEMP/info.php
+    nano /var/www/projectLEMP/info.php
 
 Type or paste the following lines into the new file. This is valid PHP code that will return information about your server:
 
@@ -25,11 +24,10 @@ You can now access this page in your web browser by visiting the domain name or 
 
 You will see a web page containing detailed information about your server:
 
-![PHP Info](https://example.com/phpinfo.png)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c6121600-c366-4ed4-8301-b562fa02f93a)
 
 After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment and your Ubuntu server. You can use `rm` to remove that file:
 
-    $ sudo rm /var/www/projectLEMP/info.php
+    sudo rm /var/www/projectLEMP/info.php
 
 You can always regenerate this file if you need it later.
-+++
