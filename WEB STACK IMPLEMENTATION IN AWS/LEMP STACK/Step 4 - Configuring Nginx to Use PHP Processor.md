@@ -1,7 +1,7 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 4 — Configuring Nginx to Use PHP Processor
+# Step 4 - Configuring Nginx to Use PHP Processor
 
 When using the Nginx web server, we can create server blocks (similar to virtual hosts in Apache) to encapsulate configuration details and host more than one domain on a single server. In this guide, we will use `projectLEMP` as an example domain name.
 
