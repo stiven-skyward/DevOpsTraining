@@ -11,7 +11,7 @@ Since this is our first time using `apt` for this session, start off by updating
 ```sh
 sudo apt update
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/cdb3c46e-0095-41dd-a5ec-e6cf47ebb453)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1f1cbf37-cac5-4cfd-8ab1-b3b707776713)
 
 ## Install Nginx
 
@@ -20,7 +20,7 @@ Following that, you can use apt install to get Nginx installed:
 ```sh
 sudo apt install nginx
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/20ea9764-381b-4696-9fc6-7d7afcb3b95c)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/01faa500-4bd5-4fb3-9b8d-5f16467e7ded)
 
 When prompted, enter Y to confirm that you want to install Nginx. Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
 
@@ -31,7 +31,7 @@ To verify that Nginx was successfully installed and is running as a service in U
 ```sh
 sudo systemctl status nginx
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/96b78549-13c2-4b91-9e57-0904a6a073fc)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ef47d254-8bc8-4cb5-8ac0-7451e2875c9b)
 
 If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
 
