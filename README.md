@@ -11,7 +11,7 @@ Welcome to the comprehensive DevOps training repository focused on various web t
 - **Introduction to the LAMP stack:** Linux, Apache, MySQL, PHP.
 - **Deployment and configuration basics on AWS.**
 
-#### 2. [WEB STACK IMPLEMENTATION (LEMP STACK) IN AWS](https://github.com/stiven-skyward/DevOpsTraining/tree/main/WEB%20STACK%20IMPLEMENTATION%20IN%20AWS/LAMP%20STACK)
+#### 2. [WEB STACK IMPLEMENTATION (LEMP STACK) IN AWS](https://github.com/stiven-skyward/DevOpsTraining/tree/main/WEB%20STACK%20IMPLEMENTATION%20IN%20AWS/LEMP%20STACK)
 
 - **Explore the LEMP stack:** Linux, Nginx, MySQL, PHP.
 - **Step-by-step guide to setting up a LEMP environment in AWS.**
