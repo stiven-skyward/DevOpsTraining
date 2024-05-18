@@ -13,23 +13,27 @@ We will create a database named `example_database` and a user named `example_use
 
 First, connect to the MySQL console using the root account:
 
-    $ sudo mysql
+    sudo mysql
 
 To create a new database, run the following command from your MySQL console:
 
-    mysql> CREATE DATABASE `example_database`;
+    CREATE DATABASE `example_database`;
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/feab5479-52d9-4bdb-a189-653a527160f7)
 
 Now you can create a new user and grant them full privileges on the database you have just created.
 
 The following command creates a new user named `example_user`, using `mysql_native_password` as the default authentication method. We’re defining this user’s password as `PassWord.1`, but you should replace this value with a secure password of your own choosing.
 
-    mysql> CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';
+    CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';
 
 Now we need to give this user permission over the `example_database` database:
 
-    mysql> GRANT ALL ON example_database.* TO 'example_user'@'%';
+    GRANT ALL ON example_database.* TO 'example_user'@'%';
 
 This will give the `example_user` user full privileges over the `example_database` database while preventing this user from creating or modifying other databases on your server.
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/5ce7da64-36f3-4724-8688-172682099891)
 
 Now exit the MySQL shell with:
 
@@ -39,21 +43,15 @@ Now exit the MySQL shell with:
 
 You can test if the new user has the proper permissions by logging in to the MySQL console again, this time using the custom user credentials:
 
-    $ mysql -u example_user -p
+    mysql -u example_user -p
 
 Notice the `-p` flag in this command, which will prompt you for the password used when creating the `example_user` user. After logging in to the MySQL console, confirm that you have access to the `example_database` database:
 
-    mysql> SHOW DATABASES;
+    SHOW DATABASES;
 
 This will give you the following output:
 
-    +--------------------+
-    | Database           |
-    +--------------------+
-    | example_database   |
-    | information_schema |
-    +--------------------+
-    2 rows in set (0.000 sec)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/50b75dbe-561f-4143-bbf4-c3dda17d28b6)
 
 ## Step 6.3: Create a Test Table
 
@@ -65,25 +63,19 @@ Next, we’ll create a test table named `todo_list`. From the MySQL console, run
         PRIMARY KEY(item_id)
     );
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/fba8daee-dd62-42bd-b9bb-8106585d9dac)
+
 Insert a few rows of content in the test table. You might want to repeat the next command a few times, using different values:
 
-    mysql> INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
+    INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
 
 To confirm that the data was successfully saved to your table, run:
 
-    mysql> SELECT * FROM example_database.todo_list;
+    SELECT * FROM example_database.todo_list;
 
 You’ll see the following output:
 
-    +---------+--------------------------+
-    | item_id | content                  |
-    +---------+--------------------------+
-    |       1 | My first important item  |
-    |       2 | My second important item |
-    |       3 | My third important item  |
-    |       4 | and this one more thing  |
-    +---------+--------------------------+
-    4 rows in set (0.000 sec)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/564c17c2-5f87-45e0-a457-f3474d520818)
 
 After confirming that you have valid data in your test table, you can exit the MySQL console:
 
@@ -93,7 +85,7 @@ After confirming that you have valid data in your test table, you can exit the M
 
 Now you can create a PHP script that will connect to MySQL and query for your content. Create a new PHP file in your custom web root directory using your preferred editor. We’ll use `nano` for that:
 
-    $ nano /var/www/projectLEMP/todo_list.php
+    nano /var/www/projectLEMP/todo_list.php
 
 The following PHP script connects to the MySQL database, queries for the content of the `todo_list` table, and displays the results in a list. If there is a problem with the database connection, it will throw an exception.
 
@@ -127,6 +119,6 @@ You can now access this page in your web browser by visiting the domain name or 
 
 You should see a page like this, showing the content you’ve inserted in your test table:
 
-![TODO List](https://example.com/todolist.png)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c2f8b3c4-ff34-4aa9-a999-f9a88ec2de0e)
 
 That means your PHP environment is ready to connect and interact with your MySQL server.
