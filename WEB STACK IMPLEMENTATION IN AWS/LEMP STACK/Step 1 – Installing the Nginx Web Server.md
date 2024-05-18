@@ -31,7 +31,7 @@ To verify that Nginx was successfully installed and is running as a service in U
 ```sh
 sudo systemctl status nginx
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/31dc95dd-f50e-4dce-b718-a4b88561578d)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/96b78549-13c2-4b91-9e57-0904a6a073fc)
 
 If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
 
