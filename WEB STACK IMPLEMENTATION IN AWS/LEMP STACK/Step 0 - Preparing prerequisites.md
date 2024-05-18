@@ -22,7 +22,7 @@ If you do not have an AWS account, follow these steps:
 
    Remember, you can have multiple EC2 instances, but make sure you **STOP** the ones you are not working with at the moment to save available free hours.
 
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/bcd44bdd-c1f1-4878-abdc-4c8e1555a3ff)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/9280e593-6536-424b-a863-4a0ede21196b)
 
 ## Connecting to EC2 Instance using Git Bash
 
