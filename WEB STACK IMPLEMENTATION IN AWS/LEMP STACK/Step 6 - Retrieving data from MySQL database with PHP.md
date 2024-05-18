@@ -33,6 +33,8 @@ Now we need to give this user permission over the `example_database` database:
 
 This will give the `example_user` user full privileges over the `example_database` database while preventing this user from creating or modifying other databases on your server.
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/5ce7da64-36f3-4724-8688-172682099891)
+
 Now exit the MySQL shell with:
 
     mysql> exit
@@ -45,17 +47,11 @@ You can test if the new user has the proper permissions by logging in to the MyS
 
 Notice the `-p` flag in this command, which will prompt you for the password used when creating the `example_user` user. After logging in to the MySQL console, confirm that you have access to the `example_database` database:
 
-    mysql> SHOW DATABASES;
+    SHOW DATABASES;
 
 This will give you the following output:
 
-    +--------------------+
-    | Database           |
-    +--------------------+
-    | example_database   |
-    | information_schema |
-    +--------------------+
-    2 rows in set (0.000 sec)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/50b75dbe-561f-4143-bbf4-c3dda17d28b6)
 
 ## Step 6.3: Create a Test Table
 
@@ -67,25 +63,19 @@ Next, we’ll create a test table named `todo_list`. From the MySQL console, run
         PRIMARY KEY(item_id)
     );
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/fba8daee-dd62-42bd-b9bb-8106585d9dac)
+
 Insert a few rows of content in the test table. You might want to repeat the next command a few times, using different values:
 
-    mysql> INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
+    INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
 
 To confirm that the data was successfully saved to your table, run:
 
-    mysql> SELECT * FROM example_database.todo_list;
+    SELECT * FROM example_database.todo_list;
 
 You’ll see the following output:
 
-    +---------+--------------------------+
-    | item_id | content                  |
-    +---------+--------------------------+
-    |       1 | My first important item  |
-    |       2 | My second important item |
-    |       3 | My third important item  |
-    |       4 | and this one more thing  |
-    +---------+--------------------------+
-    4 rows in set (0.000 sec)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/564c17c2-5f87-45e0-a457-f3474d520818)
 
 After confirming that you have valid data in your test table, you can exit the MySQL console:
 
@@ -129,6 +119,6 @@ You can now access this page in your web browser by visiting the domain name or 
 
 You should see a page like this, showing the content you’ve inserted in your test table:
 
-![TODO List](https://example.com/todolist.png)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c2f8b3c4-ff34-4aa9-a999-f9a88ec2de0e)
 
 That means your PHP environment is ready to connect and interact with your MySQL server.
