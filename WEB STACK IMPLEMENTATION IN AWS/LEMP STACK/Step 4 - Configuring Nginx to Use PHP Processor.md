@@ -1,8 +1,7 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-+++
-# Step 4 — Configuring Nginx to Use PHP Processor
+# Step 4 - Configuring Nginx to Use PHP Processor
 
 When using the Nginx web server, we can create server blocks (similar to virtual hosts in Apache) to encapsulate configuration details and host more than one domain on a single server. In this guide, we will use `projectLEMP` as an example domain name.
 
@@ -10,15 +9,15 @@ On Ubuntu 20.04, Nginx has one server block enabled by default and is configured
 
 Create the root web directory for `your_domain` as follows:
 
-    $ sudo mkdir /var/www/projectLEMP
+    sudo mkdir /var/www/projectLEMP
 
 Next, assign ownership of the directory with the `$USER` environment variable, which will reference your current system user:
 
-    $ sudo chown -R $USER:$USER /var/www/projectLEMP
+    sudo chown -R $USER:$USER /var/www/projectLEMP
 
 Then, open a new configuration file in Nginx’s `sites-available` directory using your preferred command-line editor. Here, we’ll use `nano`:
 
-    $ sudo nano /etc/nginx/sites-available/projectLEMP
+    sudo nano /etc/nginx/sites-available/projectLEMP
 
 This will create a new blank file. Paste in the following bare-bones configuration:
 
@@ -59,38 +58,43 @@ When you’re done editing, save and close the file. If you’re using `nano`, y
 
 Activate your configuration by linking to the config file from Nginx’s `sites-enabled` directory:
 
-    $ sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+    sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
 
 This will tell Nginx to use the configuration next time it is reloaded. You can test your configuration for syntax errors by typing:
 
-    $ sudo nginx -t
+    sudo nginx -t
 
 You shall see the following message:
 
     nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
     nginx: configuration file /etc/nginx/nginx.conf test is successful
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/993b7ef8-1d50-4df0-88e3-c7a05da780bc)
+
 If any errors are reported, go back to your configuration file to review its contents before continuing.
 
 We also need to disable the default Nginx host that is currently configured to listen on port 80. For this, run:
 
-    $ sudo unlink /etc/nginx/sites-enabled/default
+    sudo unlink /etc/nginx/sites-enabled/default
 
 When you are ready, reload Nginx to apply the changes:
 
-    $ sudo systemctl reload nginx
+    sudo systemctl reload nginx
 
 Your new website is now active, but the web root `/var/www/projectLEMP` is still empty. Create an `index.html` file in that location so that we can test that your new server block works as expected:
 
-    $ sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+    sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/9b6023a1-57d4-4f58-b492-fdae432c4aec)
 
 Now go to your browser and try to open your website URL using the IP address:
 
     http://<Public-IP-Address>:80
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/98e07dcc-cd85-405d-9fb7-9bdfc316db6e)
 
 If you see the text from the `echo` command you wrote to the `index.html` file, then it means your Nginx site is working as expected. In the output, you will see your server's public hostname (DNS name) and public IP address. You can also access your website in your browser by public DNS name, not only by IP - try it out, the result must be the same (port is optional):
 
     http://<Public-DNS-Name>:80
 
 You can leave this file in place as a temporary landing page for your application until you set up an `index.php` file to replace it. Once you do that, remember to remove or rename the `index.html` file from your document root, as it would take precedence over an `index.php` file by default.
-+++
