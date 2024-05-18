@@ -69,7 +69,7 @@ You shall see the following message:
     nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
     nginx: configuration file /etc/nginx/nginx.conf test is successful
 
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/61bbdb4a-4fae-40bf-9507-cadea4ac2a6e)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/993b7ef8-1d50-4df0-88e3-c7a05da780bc)
 
 If any errors are reported, go back to your configuration file to review its contents before continuing.
 
