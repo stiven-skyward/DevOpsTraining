@@ -56,7 +56,7 @@ or
 ```sh
 curl http://127.0.0.1:80
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/260492a4-f8a8-41a2-a0db-c62a8481d5d5)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b03de205-2e71-44ae-b681-129b5e0d8fd6)
 
 These two commands above actually do pretty much the same - they use the `curl` command to request our Nginx on port 80 (actually you can even try not specifying any port - it will work anyway). The difference is that in the first case we try to access our server via DNS name and in the second one - by IP address (in this case, IP address `127.0.0.1` corresponds to DNS name `localhost`, and the process of converting a DNS name to IP address is called "resolution"). We will touch DNS in further lectures and projects.
 
@@ -69,6 +69,7 @@ Now it is time for us to test how our Nginx server can respond to requests from 
 ```vbnet
 http://<Public-IP-Address>:80
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6124326b-5492-4010-8d8c-9ac9777c09c4)
 
 Another way to retrieve your Public IP address, other than checking it in the AWS Web console, is to use the following command:
 
