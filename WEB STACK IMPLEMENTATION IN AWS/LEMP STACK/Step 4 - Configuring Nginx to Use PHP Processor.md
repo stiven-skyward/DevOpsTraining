@@ -1,7 +1,6 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-+++
 # Step 4 — Configuring Nginx to Use PHP Processor
 
 When using the Nginx web server, we can create server blocks (similar to virtual hosts in Apache) to encapsulate configuration details and host more than one domain on a single server. In this guide, we will use `projectLEMP` as an example domain name.
@@ -93,4 +92,3 @@ If you see the text from the `echo` command you wrote to the `index.html` file, 
     http://<Public-DNS-Name>:80
 
 You can leave this file in place as a temporary landing page for your application until you set up an `index.php` file to replace it. Once you do that, remember to remove or rename the `index.html` file from your document root, as it would take precedence over an `index.php` file by default.
-+++
