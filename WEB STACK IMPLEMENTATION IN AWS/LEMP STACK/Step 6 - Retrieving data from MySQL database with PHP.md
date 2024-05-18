@@ -19,15 +19,17 @@ To create a new database, run the following command from your MySQL console:
 
     CREATE DATABASE `example_database`;
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/feab5479-52d9-4bdb-a189-653a527160f7)
+
 Now you can create a new user and grant them full privileges on the database you have just created.
 
 The following command creates a new user named `example_user`, using `mysql_native_password` as the default authentication method. We’re defining this user’s password as `PassWord.1`, but you should replace this value with a secure password of your own choosing.
 
-    mysql> CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';
+    CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';
 
 Now we need to give this user permission over the `example_database` database:
 
-    mysql> GRANT ALL ON example_database.* TO 'example_user'@'%';
+    GRANT ALL ON example_database.* TO 'example_user'@'%';
 
 This will give the `example_user` user full privileges over the `example_database` database while preventing this user from creating or modifying other databases on your server.
 
