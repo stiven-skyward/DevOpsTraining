@@ -14,7 +14,13 @@ To install these two packages at once, run:
 ```sh
 sudo apt install php-fpm php-mysql
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/2bbaf635-edd3-4390-a32e-3d138f5bb2a0)
 
 When prompted, type `Y` and press `ENTER` to confirm installation.
 
-You now have your PHP components installed.
+You can confirm that you have your PHP components installed using the command:
+
+```sh
+php -v
+```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/90dd6e1a-1bd8-4882-950a-576fe480630a)
