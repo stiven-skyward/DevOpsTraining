@@ -9,15 +9,15 @@ On Ubuntu 20.04, Nginx has one server block enabled by default and is configured
 
 Create the root web directory for `your_domain` as follows:
 
-    $ sudo mkdir /var/www/projectLEMP
+    sudo mkdir /var/www/projectLEMP
 
 Next, assign ownership of the directory with the `$USER` environment variable, which will reference your current system user:
 
-    $ sudo chown -R $USER:$USER /var/www/projectLEMP
+    sudo chown -R $USER:$USER /var/www/projectLEMP
 
 Then, open a new configuration file in Nginx’s `sites-available` directory using your preferred command-line editor. Here, we’ll use `nano`:
 
-    $ sudo nano /etc/nginx/sites-available/projectLEMP
+    sudo nano /etc/nginx/sites-available/projectLEMP
 
 This will create a new blank file. Paste in the following bare-bones configuration:
 
@@ -58,11 +58,11 @@ When you’re done editing, save and close the file. If you’re using `nano`, y
 
 Activate your configuration by linking to the config file from Nginx’s `sites-enabled` directory:
 
-    $ sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+    sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
 
 This will tell Nginx to use the configuration next time it is reloaded. You can test your configuration for syntax errors by typing:
 
-    $ sudo nginx -t
+    sudo nginx -t
 
 You shall see the following message:
 
@@ -73,15 +73,15 @@ If any errors are reported, go back to your configuration file to review its con
 
 We also need to disable the default Nginx host that is currently configured to listen on port 80. For this, run:
 
-    $ sudo unlink /etc/nginx/sites-enabled/default
+    sudo unlink /etc/nginx/sites-enabled/default
 
 When you are ready, reload Nginx to apply the changes:
 
-    $ sudo systemctl reload nginx
+    sudo systemctl reload nginx
 
 Your new website is now active, but the web root `/var/www/projectLEMP` is still empty. Create an `index.html` file in that location so that we can test that your new server block works as expected:
 
-    $ sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+    sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
 
 Now go to your browser and try to open your website URL using the IP address:
 
