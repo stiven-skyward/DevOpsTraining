@@ -69,6 +69,8 @@ You shall see the following message:
     nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
     nginx: configuration file /etc/nginx/nginx.conf test is successful
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/61bbdb4a-4fae-40bf-9507-cadea4ac2a6e)
+
 If any errors are reported, go back to your configuration file to review its contents before continuing.
 
 We also need to disable the default Nginx host that is currently configured to listen on port 80. For this, run:
