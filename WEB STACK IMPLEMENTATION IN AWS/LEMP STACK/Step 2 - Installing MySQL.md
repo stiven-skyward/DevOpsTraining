@@ -12,6 +12,7 @@ Use `apt` to acquire and install MySQL:
 ```sh
 sudo apt install mysql-server
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/a362d538-ca42-4c5a-863e-23429eb6dad2)
 
 When prompted, confirm installation by typing `Y`, and then `ENTER`.
 
@@ -25,7 +26,7 @@ sudo mysql
 
 This will connect to the MySQL server as the administrative database user `root`, which is inferred by the use of `sudo` when running this command. You should see output like this:
 
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/97695e92-6040-4c50-9add-db30ec3eea90)
 
 ## Securing MySQL
 
@@ -40,6 +41,7 @@ In the MySQL shell, run:
 ```sql
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/3eb91c28-a6b5-4334-a2b6-c3de817f1bfd)
 
 Exit the MySQL shell with:
 
@@ -61,12 +63,7 @@ This will ask if you want to configure the VALIDATE PASSWORD PLUGIN.
 
 Enabling this feature is optional. If enabled, passwords which don’t match the specified criteria will be rejected by MySQL with an error.
 
-```sh
-VALIDATE PASSWORD PLUGIN can be used to test passwords
-and improve security. It checks the strength of password
-and allows the users to set only those passwords which are
-secure enough. Would you like to setup VALIDATE PASSWORD plugin?
-```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/fa5b5673-e866-49f7-b3b1-e336de2680bd)
 
 Press y|Y for Yes, or any other key for No:
 
@@ -93,11 +90,14 @@ For the rest of the questions, press `Y` and hit the `ENTER` key at each prompt.
 - **Disable remote root logins**
 - **Reload privilege tables**
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/3ff9b13d-22c2-4d01-9665-e12948dcd5fa)
+
 ## Testing MySQL Login
 
 ```sh
 sudo mysql -p
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e0b7799b-1ec1-4241-971f-4dd113e0018e)
 
 Notice the `-p` flag in this command, which will prompt you for the password you set for the `root` user.
 
