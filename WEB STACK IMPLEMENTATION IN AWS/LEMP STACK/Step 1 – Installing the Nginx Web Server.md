@@ -11,6 +11,7 @@ Since this is our first time using `apt` for this session, start off by updating
 ```sh
 sudo apt update
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/cdb3c46e-0095-41dd-a5ec-e6cf47ebb453)
 
 ## Install Nginx
 
@@ -19,6 +20,7 @@ Following that, you can use apt install to get Nginx installed:
 ```sh
 sudo apt install nginx
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/20ea9764-381b-4696-9fc6-7d7afcb3b95c)
 
 When prompted, enter Y to confirm that you want to install Nginx. Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
 
@@ -29,6 +31,7 @@ To verify that Nginx was successfully installed and is running as a service in U
 ```sh
 sudo systemctl status nginx
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/31dc95dd-f50e-4dce-b718-a4b88561578d)
 
 If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
 
@@ -53,6 +56,7 @@ or
 ```sh
 curl http://127.0.0.1:80
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/260492a4-f8a8-41a2-a0db-c62a8481d5d5)
 
 These two commands above actually do pretty much the same - they use the `curl` command to request our Nginx on port 80 (actually you can even try not specifying any port - it will work anyway). The difference is that in the first case we try to access our server via DNS name and in the second one - by IP address (in this case, IP address `127.0.0.1` corresponds to DNS name `localhost`, and the process of converting a DNS name to IP address is called "resolution"). We will touch DNS in further lectures and projects.
 
