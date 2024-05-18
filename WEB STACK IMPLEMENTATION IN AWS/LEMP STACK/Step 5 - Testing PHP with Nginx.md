@@ -1,7 +1,6 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-+++
 # Step 5 - Testing PHP with Nginx
 
 Your LEMP stack should now be completely set up.
@@ -32,4 +31,3 @@ After checking the relevant information about your PHP server through that page,
     $ sudo rm /var/www/projectLEMP/info.php
 
 You can always regenerate this file if you need it later.
-+++
