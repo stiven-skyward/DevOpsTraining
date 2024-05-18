@@ -85,9 +85,13 @@ Your new website is now active, but the web root `/var/www/projectLEMP` is still
 
     sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/9b6023a1-57d4-4f58-b492-fdae432c4aec)
+
 Now go to your browser and try to open your website URL using the IP address:
 
     http://<Public-IP-Address>:80
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/98e07dcc-cd85-405d-9fb7-9bdfc316db6e)
 
 If you see the text from the `echo` command you wrote to the `index.html` file, then it means your Nginx site is working as expected. In the output, you will see your server's public hostname (DNS name) and public IP address. You can also access your website in your browser by public DNS name, not only by IP - try it out, the result must be the same (port is optional):
 
