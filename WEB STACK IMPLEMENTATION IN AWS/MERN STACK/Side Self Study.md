@@ -1,7 +1,6 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
- 
-```markdown
+
 # Side Self Study
 
 ## 1. Database Management Systems (DBMS)
@@ -62,7 +61,6 @@ function add(a, b) {
 
 let sum = add(2, 3);
 console.log(sum);
-```
 
 ## 4. RESTful API
 
