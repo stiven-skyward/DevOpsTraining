@@ -105,6 +105,3 @@ console.log(sum);
     line-height: 1.5;
   }
   ```
-
-```
- 
