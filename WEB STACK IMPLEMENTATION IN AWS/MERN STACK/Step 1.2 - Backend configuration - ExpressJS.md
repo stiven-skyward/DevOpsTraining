@@ -42,7 +42,6 @@ Open the `index.js` file with the command below:
 ```sh
 nano index.js
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c755a967-2677-495c-bdc6-74892cf1f651)
 
 Type the code below into it and save. Do not get overwhelmed by the code you see. For now, simply paste the code into the file.
 
