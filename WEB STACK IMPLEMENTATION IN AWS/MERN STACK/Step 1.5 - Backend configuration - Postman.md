@@ -25,6 +25,8 @@ This request sends a new task to our To-Do list so the application can store it 
 
 > **Note:** Make sure you set the header key `Content-Type` as `application/json`.
 
+
+
 **Example JSON body**:
 
 ```json
@@ -32,12 +34,15 @@ This request sends a new task to our To-Do list so the application can store it 
     "action": "Learn DevOps"
 }
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/5f6065dd-32a5-484c-a16e-94b0a043da54)
 
 **Example Header**:
 
 | Key           | Value             |
 |---------------|-------------------|
 | Content-Type  | application/json  |
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1be5771e-8657-401e-907e-a5c2032c409f)
 
 ### Create a GET Request
 
