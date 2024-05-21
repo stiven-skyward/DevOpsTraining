@@ -81,4 +81,5 @@ ls
 ```
 
 You should see the `package.json` file listed in the output.
+
 ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f3c3abe1-3775-41f6-928a-325a8a209b4e)
