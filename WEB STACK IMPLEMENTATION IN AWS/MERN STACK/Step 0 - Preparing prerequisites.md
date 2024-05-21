@@ -5,85 +5,52 @@
 
 In order to complete this project, you will need an AWS account and a virtual server with Ubuntu Server OS.
 
-## AWS Account Setup
+## Setting Up an AWS Account and EC2 Instance
 
-If you do not have an AWS account, follow these steps:
+### If you do not have an AWS account:
+Go back to **Project 1 Step 0** to sign in to the AWS free tier account and create a new EC2 Instance of `t2.micro` family with Ubuntu Server 24.04 LTS (HVM) image. Remember, you can have multiple EC2 instances, but make sure you **STOP** the ones you are not working with at the moment to save available free hours.
 
-1. **Sign in to AWS Free Tier Account**:
-   - Go back to **Project 1 Step 0** to sign up for the AWS Free Tier account.
-   - Follow the instructions to create a new account if you haven't done so already.
-  
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/10fa8133-19d6-4242-b393-b8dd67406170)
+### Creating an EC2 Instance
 
-2. **Create a New EC2 Instance**:
-   - Navigate to the EC2 Dashboard in your AWS Management Console.
-   - Click on **Launch Instance** and select **t2.micro** family.
-   - Choose the **Ubuntu Server 22.04 LTS (HVM)** image.
+1. **Navigate to the EC2 Dashboard** in your AWS Management Console.
+2. **Click on "Launch Instance"**.
+3. **Select the Ubuntu Server 24.04 LTS (HVM) image**.
+4. **Choose the t2.micro instance type**.
+5. **Configure instance details**, add storage, and configure security groups as needed.
+6. **Add Tags**:
+   - Key: `Name`
+   - Value: Corresponds to the current project you are working on (e.g., "Project X Server")
 
-   Remember, you can have multiple EC2 instances, but make sure you **STOP** the ones you are not working with at the moment to save available free hours.
-
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/9280e593-6536-424b-a863-4a0ede21196b)
-
-## Connecting to EC2 Instance using Git Bash
-
-### Install Git Bash
-
-Download and install Git Bash from the [official Git website](https://gitforwindows.org/).
-
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/0f434d5e-2925-4b31-bf19-4022a747cf9b)
-
-### Connect to EC2 Instance
-
-You can change the `.pem` file permissions using the Windows Subsystem for Linux (WSL):
-
-1. **Open PowerShell as Administrator**:
-   - *Click on the Start menu, type `PowerShell`.*
-   - *Right-click on `PowerShell` and select `Run as administrator`.*
-
-2. **Run the command**:
-   - ```powershell
-     wsl --install
-     ```
-   - Follow the instructions and restart your computer once the process is completed.
-  
-3. **Open WSL Terminal and navigate to the directory**:
-   - ```sh
-     cd /mnt/Path-to-Your-private-key.pem/
-     ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/828666a5-94c9-4cb3-be6f-4f0e22fc5741)
-
-4. **Copy the Key File to the WSL Home Directory**:
-   - ```sh
-     cp /mnt/d/DevOps/My-Keys.pem ~/
-     ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/41db1959-4ef0-4d6e-a5b4-f940fea6f937)
-
-5. **Change File Permissions**:
-   - ```sh
-     chmod 400 ~/My-Keys.pem
-     ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/0eec1422-44c5-46f3-b226-f007d775331d)
-
-Launch Git Bash as administrator and run the following command to connect to your EC2 instance:
-
-```sh
-cd /Path-to-Your-private-key.pem/
+### Example Tag Configuration
+```text
+Key: Name
+Value: Project X Server
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/574cd24c-d7ee-4144-a15b-c3adca554d33)
 
-```sh
-ssh -i <Your-private-key.pem> ubuntu@<EC2-Public-IP-address>
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/fa190708-568f-4dfd-86e6-ead4bd51032e)
+![Add Tags](path/to/add-tags-screenshot.png)  <!-- Add a screenshot if necessary -->
 
-Replace `<Your-private-key.pem>` with the path to your private key file and `<EC2-Public-IP-address>` with the public IP address of your EC2 instance.
+## Connecting to Your EC2 Instance
+
+### Hint #1: Tagging Your Instances
+When you create your EC2 Instances, you can add the Tag `Name` to it with a value that corresponds to the current project you are working on. This tag will be reflected in the name of the EC2 Instance.
+
+### Hint #2 (for Windows users only): Using Windows Terminal
+In previous projects, we used Putty and Git Bash to connect to our EC2 Instances. In this project and going forward, we are going to explore the usage of Windows Terminal.
+
+### Steps to Connect Using Windows Terminal
+
+1. **Download and Install Windows Terminal** from the Microsoft Store if you haven't already.
+2. **Launch Windows Terminal**.
+3. **Open a new tab with PowerShell or Command Prompt**.
+4. **Connect to your EC2 Instance using SSH**:
+   ```sh
+   ssh -i "path/to/your-key.pem" ubuntu@your-ec2-public-ip
+   ```
+
+Replace `"path/to/your-key.pem"` with the path to your private key file and `your-ec2-public-ip` with the public IP address of your EC2 instance.
 
 ### Example Command
-
-If your private key file is named `my-key.pem` and your EC2 instance's public IP address is `192.0.2.0`, the command would look like this:
-
 ```sh
-ssh -i my-key.pem ubuntu@192.0.2.0
+ssh -i "C:/Users/YourName/keys/my-key.pem" ubuntu@123.45.67.89
 ```
 
-By using Git Bash, you can avoid the need to convert your `.pem` key to a `.ppk` key, simplifying the process of connecting to your EC2 instance.
