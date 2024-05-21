@@ -1,80 +1,366 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 1 – Installing the Nginx Web Server
+# Step 2 - Creating Your React Components
 
-In order to display web pages to our site visitors, we are going to employ Nginx, a high-performance web server. We’ll use the `apt` package manager to install this package.
+One of the advantages of React is that it makes use of components, which are reusable and also make the code modular. For our Todo app, there will be two stateful components and one stateless component. 
 
-## Update the Package Index
+## Setting Up the Components
 
-Since this is our first time using `apt` for this session, start off by updating your server’s package index:
-```sh
-sudo apt update
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1f1cbf37-cac5-4cfd-8ab1-b3b707776713)
+1. **Navigate to the `client` directory**:
+   
+   ```sh
+   cd client
+   ```
 
-## Install Nginx
+2. **Move to the `src` directory**:
 
-Following that, you can use apt install to get Nginx installed:
+   ```sh
+   cd src
+   ```
 
-```sh
-sudo apt install nginx
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/01faa500-4bd5-4fb3-9b8d-5f16467e7ded)
+3. **Create a `components` folder** inside the `src` folder:
 
-When prompted, enter Y to confirm that you want to install Nginx. Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
+   ```sh
+   mkdir components
+   ```
 
-### Verify Nginx Installation
+4. **Move into the `components` directory**:
 
-To verify that Nginx was successfully installed and is running as a service in Ubuntu, run:
+   ```sh
+   cd components
+   ```
 
-```sh
-sudo systemctl status nginx
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ef47d254-8bc8-4cb5-8ac0-7451e2875c9b)
+5. **Create the component files**:
 
-If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
+   ```sh
+   touch Input.js ListTodo.js Todo.js
+   ```
 
-## Open TCP Port 80
+### Creating the `Input` Component
 
-Before we can receive any traffic by our Web Server, we need to open TCP port 80, which is the default port that web browsers use to access web pages on the Internet.
+1. **Open the `Input.js` file**:
 
-As we know, we have TCP port 22 open by default on our EC2 machine to access it via SSH, so we need to add a rule to EC2 configuration to open inbound connection through port 80.
+   ```sh
+   vi Input.js
+   ```
 
-Our server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means 'from any IP address').
+2. **Copy and paste the following code into `Input.js`**:
 
-## Test Local Access
+   ```javascript
+   import React, { Component } from 'react';
+   import axios from 'axios';
 
-First, let us try to check how we can access it locally in our Ubuntu shell. Run:
+   class Input extends Component {
+       state = {
+           action: ""
+       }
 
-```sh
-curl http://localhost:80
-```
+       addTodo = () => {
+           const task = { action: this.state.action }
 
-or
+           if(task.action && task.action.length > 0){
+               axios.post('/api/todos', task)
+                   .then(res => {
+                       if(res.data){
+                           this.props.getTodos();
+                           this.setState({ action: "" });
+                       }
+                   })
+                   .catch(err => console.log(err));
+           } else {
+               console.log('input field required');
+           }
+       }
 
-```sh
-curl http://127.0.0.1:80
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b03de205-2e71-44ae-b681-129b5e0d8fd6)
+       handleChange = (e) => {
+           this.setState({ action: e.target.value });
+       }
 
-These two commands above actually do pretty much the same - they use the `curl` command to request our Nginx on port 80 (actually you can even try not specifying any port - it will work anyway). The difference is that in the first case we try to access our server via DNS name and in the second one - by IP address (in this case, IP address `127.0.0.1` corresponds to DNS name `localhost`, and the process of converting a DNS name to IP address is called "resolution"). We will touch DNS in further lectures and projects.
+       render() {
+           let { action } = this.state;
+           return (
+               <div>
+                   <input type="text" onChange={this.handleChange} value={action} />
+                   <button onClick={this.addTodo}>add todo</button>
+               </div>
+           );
+       }
+   }
 
-As an output, you can see some strangely formatted text. Do not worry; we just made sure that our Nginx web service responds to the `curl` command with some payload.
+   export default Input;
+   ```
 
-## Test Internet Access
+3. **Install Axios**:
 
-Now it is time for us to test how our Nginx server can respond to requests from the Internet. Open a web browser of your choice and try to access the following URL:
+   ```sh
+   cd ../..
+   npm install axios
+   ```
 
-```vbnet
-http://<Public-IP-Address>:80
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6124326b-5492-4010-8d8c-9ac9777c09c4)
+### Creating the `ListTodo` Component
 
-Another way to retrieve your Public IP address, other than checking it in the AWS Web console, is to use the following command:
+1. **Open the `ListTodo.js` file**:
 
-```sh
-curl -s http://169.254.169.254/latest/meta-data/public-ipv4
-```
+   ```sh
+   vi ListTodo.js
+   ```
 
-The URL in the browser shall also work if you do not specify the port number since all web browsers use port 80 by default.
+2. **Copy and paste the following code into `ListTodo.js`**:
+
+   ```javascript
+   import React from 'react';
+
+   const ListTodo = ({ todos, deleteTodo }) => {
+       return (
+           <ul>
+               {todos && todos.length > 0 ? (
+                   todos.map(todo => (
+                       <li key={todo._id} onClick={() => deleteTodo(todo._id)}>{todo.action}</li>
+                   ))
+               ) : (
+                   <li>No todo(s) left</li>
+               )}
+           </ul>
+       );
+   }
+
+   export default ListTodo;
+   ```
+
+### Creating the `Todo` Component
+
+1. **Open the `Todo.js` file**:
+
+   ```sh
+   vi Todo.js
+   ```
+
+2. **Copy and paste the following code into `Todo.js`**:
+
+   ```javascript
+   import React, { Component } from 'react';
+   import axios from 'axios';
+
+   import Input from './Input';
+   import ListTodo from './ListTodo';
+
+   class Todo extends Component {
+       state = {
+           todos: []
+       }
+
+       componentDidMount() {
+           this.getTodos();
+       }
+
+       getTodos = () => {
+           axios.get('/api/todos')
+               .then(res => {
+                   if(res.data) {
+                       this.setState({ todos: res.data });
+                   }
+               })
+               .catch(err => console.log(err));
+       }
+
+       deleteTodo = (id) => {
+           axios.delete(`/api/todos/${id}`)
+               .then(res => {
+                   if(res.data) {
+                       this.getTodos();
+                   }
+               })
+               .catch(err => console.log(err));
+       }
+
+       render() {
+           let { todos } = this.state;
+           return (
+               <div>
+                   <h1>My Todo(s)</h1>
+                   <Input getTodos={this.getTodos} />
+                   <ListTodo todos={todos} deleteTodo={this.deleteTodo} />
+               </div>
+           );
+       }
+   }
+
+   export default Todo;
+   ```
+
+### Adjusting the `App` Component
+
+1. **Move to the `src` directory**:
+
+   ```sh
+   cd ..
+   ```
+
+2. **Open the `App.js` file**:
+
+   ```sh
+   vi App.js
+   ```
+
+3. **Copy and paste the following code into `App.js`**:
+
+   ```javascript
+   import React from 'react';
+   import Todo from './components/Todo';
+   import './App.css';
+
+   const App = () => {
+       return (
+           <div className="App">
+               <Todo />
+           </div>
+       );
+   }
+
+   export default App;
+   ```
+
+### Adding CSS for the App
+
+1. **Open the `App.css` file**:
+
+   ```sh
+   vi App.css
+   ```
+
+2. **Copy and paste the following code into `App.css`**:
+
+   ```css
+   .App {
+       text-align: center;
+       font-size: calc(10px + 2vmin);
+       width: 60%;
+       margin-left: auto;
+       margin-right: auto;
+   }
+
+   input {
+       height: 40px;
+       width: 50%;
+       border: none;
+       border-bottom: 2px #101113 solid;
+       background: none;
+       font-size: 1.5rem;
+       color: #787a80;
+   }
+
+   input:focus {
+       outline: none;
+   }
+
+   button {
+       width: 25%;
+       height: 45px;
+       border: none;
+       margin-left: 10px;
+       font-size: 25px;
+       background: #101113;
+       border-radius: 5px;
+       color: #787a80;
+       cursor: pointer;
+   }
+
+   button:focus {
+       outline: none;
+   }
+
+   ul {
+       list-style: none;
+       text-align: left;
+       padding: 15px;
+       background: #171a1f;
+       border-radius: 5px;
+   }
+
+   li {
+       padding: 15px;
+       font-size: 1.5rem;
+       margin-bottom: 15px;
+       background: #282c34;
+       border-radius: 5px;
+       overflow-wrap: break-word;
+       cursor: pointer;
+   }
+
+   @media only screen and (min-width: 300px) {
+       .App {
+           width: 80%;
+       }
+
+       input {
+           width: 100%;
+       }
+
+       button {
+           width: 100%;
+           margin-top: 15px;
+           margin-left: 0;
+       }
+   }
+
+   @media only screen and (min-width: 640px) {
+       .App {
+           width: 60%;
+       }
+
+       input {
+           width: 50%;
+       }
+
+       button {
+           width: 30%;
+           margin-left: 10px;
+           margin-top: 0;
+       }
+   }
+   ```
+
+3. **Open the `index.css` file**:
+
+   ```sh
+   vi index.css
+   ```
+
+4. **Copy and paste the following code into `index.css`**:
+
+   ```css
+   body {
+       margin: 0;
+       padding: 0;
+       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+       sans-serif;
+       -webkit-font-smoothing: antialiased;
+       -moz-osx-font-smoothing: grayscale;
+       box-sizing: border-box;
+       background-color: #282c34;
+       color: #787a80;
+   }
+
+   code {
+       font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+       monospace;
+   }
+   ```
+
+### Running the App
+
+1. **Move back to the Todo directory**:
+
+   ```sh
+   cd ../..
+   ```
+
+2. **Run the app**:
+
+   ```sh
+   npm run dev
+   ```
+
+Assuming there are no errors when saving all these files, our To-Do app should be ready and fully functional with the functionality discussed earlier: creating a task, deleting a task, and viewing all your tasks.
