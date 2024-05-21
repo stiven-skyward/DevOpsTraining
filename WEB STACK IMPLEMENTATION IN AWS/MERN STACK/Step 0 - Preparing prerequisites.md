@@ -27,7 +27,7 @@ Key: Name
 Value: Project X Server
 ```
 
-![Add Tags](path/to/add-tags-screenshot.png)  <!-- Add a screenshot if necessary -->
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ffcd9c76-2473-4af3-9a56-8519e3dfb384)
 
 ## Connecting to Your EC2 Instance
 
