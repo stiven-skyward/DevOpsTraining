@@ -1,80 +1,123 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 1 – Installing the Nginx Web Server
+# MongoDB Database
 
-In order to display web pages to our site visitors, we are going to employ Nginx, a high-performance web server. We’ll use the `apt` package manager to install this package.
+We need a database where we will store our data. For this, we will make use of mLab. mLab provides MongoDB database as a service solution (DBaaS), making it easier to manage our database.
 
-## Update the Package Index
+## Sign Up for mLab
 
-Since this is our first time using `apt` for this session, start off by updating your server’s package index:
+1. **Sign up for a shared clusters free account** [here](https://www.mongodb.com/cloud/atlas/register).
+2. **Select AWS as the cloud provider** and choose a region near you.
+3. **Complete the get started checklist** as shown in the image below.
+
+![Get Started Checklist](path/to/image.png)
+
+## Allow Access to the MongoDB Database
+
+1. **Allow access from anywhere** (not secure, but ideal for testing).
+
+    ![Allow Access](path/to/image.png)
+
+2. **IMPORTANT NOTE:** Change the deletion time from 6 Hours to 1 Week.
+
+## Create a MongoDB Database and Collection
+
+1. **Create a new MongoDB database** and a collection inside mLab.
+
+    ![Create Database](path/to/image.png)
+
+## Environment Variables
+
+In the `index.js` file, we specified `process.env` to access environment variables, but we have not yet created this file. So we need to do that now.
+
+1. **Create a file in your Todo directory and name it `.env`.**
+
+    ```sh
+    touch .env
+    nano .env
+    ```
+
+2. **Add the connection string to access the database in it, just as below:**
+
+    ```plaintext
+    DB='mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority'
+    ```
+
+    Ensure to update `<username>`, `<password>`, `<network-address>`, and `<dbname>` according to your setup.
+
+    ![Get Connection String](path/to/image.png)
+
+## Update `index.js` to Use `.env`
+
+1. **Open the file with vim:**
+
+    ```sh
+    vim index.js
+    ```
+
+2. **Delete the existing content:**
+
+    - Press `esc`
+    - Type `:`
+    - Type `%d`
+    - Hit `Enter`
+
+    The entire content will be deleted.
+
+3. **Enter insert mode and paste the entire code below:**
+
+    - Press `i` to enter insert mode.
+    - Paste the following code:
+
+    ```javascript
+    const express = require('express');
+    const bodyParser = require('body-parser');
+    const mongoose = require('mongoose');
+    const routes = require('./routes/api');
+    const path = require('path');
+    require('dotenv').config();
+
+    const app = express();
+
+    const port = process.env.PORT || 5000;
+
+    // Connect to the database
+    mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(() => console.log(`Database connected successfully`))
+        .catch(err => console.log(err));
+
+    // Override mongoose promise with node's promise
+    mongoose.Promise = global.Promise;
+
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
+
+    app.use(bodyParser.json());
+
+    app.use('/api', routes);
+
+    app.use((err, req, res, next) => {
+        console.log(err);
+        next();
+    });
+
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
+    ```
+
+Using environment variables to store information is considered more secure and a best practice to separate configuration and secret data from the application, instead of writing connection strings directly inside the `index.js` application file.
+
+## Start Your Server
+
+Start your server using the command:
+
 ```sh
-sudo apt update
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1f1cbf37-cac5-4cfd-8ab1-b3b707776713)
-
-## Install Nginx
-
-Following that, you can use apt install to get Nginx installed:
-
-```sh
-sudo apt install nginx
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/01faa500-4bd5-4fb3-9b8d-5f16467e7ded)
-
-When prompted, enter Y to confirm that you want to install Nginx. Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
-
-### Verify Nginx Installation
-
-To verify that Nginx was successfully installed and is running as a service in Ubuntu, run:
-
-```sh
-sudo systemctl status nginx
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ef47d254-8bc8-4cb5-8ac0-7451e2875c9b)
-
-If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
-
-## Open TCP Port 80
-
-Before we can receive any traffic by our Web Server, we need to open TCP port 80, which is the default port that web browsers use to access web pages on the Internet.
-
-As we know, we have TCP port 22 open by default on our EC2 machine to access it via SSH, so we need to add a rule to EC2 configuration to open inbound connection through port 80.
-
-Our server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means 'from any IP address').
-
-## Test Local Access
-
-First, let us try to check how we can access it locally in our Ubuntu shell. Run:
-
-```sh
-curl http://localhost:80
+node index.js
 ```
 
-or
-
-```sh
-curl http://127.0.0.1:80
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b03de205-2e71-44ae-b681-129b5e0d8fd6)
-
-These two commands above actually do pretty much the same - they use the `curl` command to request our Nginx on port 80 (actually you can even try not specifying any port - it will work anyway). The difference is that in the first case we try to access our server via DNS name and in the second one - by IP address (in this case, IP address `127.0.0.1` corresponds to DNS name `localhost`, and the process of converting a DNS name to IP address is called "resolution"). We will touch DNS in further lectures and projects.
-
-As an output, you can see some strangely formatted text. Do not worry; we just made sure that our Nginx web service responds to the `curl` command with some payload.
-
-## Test Internet Access
-
-Now it is time for us to test how our Nginx server can respond to requests from the Internet. Open a web browser of your choice and try to access the following URL:
-
-```vbnet
-http://<Public-IP-Address>:80
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6124326b-5492-4010-8d8c-9ac9777c09c4)
-
-Another way to retrieve your Public IP address, other than checking it in the AWS Web console, is to use the following command:
-
-```sh
-curl -s http://169.254.169.254/latest/meta-data/public-ipv4
-```
-
-The URL in the browser shall also work if you do not specify the port number since all web browsers use port 80 by default.
+You should see a message `Database connected successfully`. If so, we have our backend configured.
