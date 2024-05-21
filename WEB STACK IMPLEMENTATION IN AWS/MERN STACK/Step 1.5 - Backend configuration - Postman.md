@@ -74,7 +74,7 @@ http://<PublicIP-or-PublicDNS>:5000/api/todos/60d21b4667d0d8992e610c85
 
 ## Summary
 
-By now you have tested the backend part of our To-Do application and have made sure that it supports all three operations we wanted:
+By now we have tested the backend part of our To-Do application and have made sure that it supports all three operations we wanted:
 
 - [x] **Display a list of tasks** - HTTP GET request
 - [x] **Add a new task to the list** - HTTP POST request
