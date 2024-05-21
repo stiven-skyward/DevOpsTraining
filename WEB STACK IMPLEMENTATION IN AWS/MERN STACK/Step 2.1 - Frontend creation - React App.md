@@ -11,10 +11,14 @@ Since we are done with the functionality we want from our backend and API, it is
    In the same root directory as your backend code, which is the Todo directory, run:
    
    ```sh
-   npx create-react-app client
+   npm install -g yarn
+   yarn create react-app client
+   
    ```
    
    This will create a new folder in your Todo directory called `client`, where you will add all the React code.
+
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/0cdd2e92-bf6c-41d5-9098-0a6b7a62c1fa)
 
 ## Running a React App
 
@@ -26,6 +30,7 @@ Before testing the React app, there are some dependencies that need to be instal
    ```sh
    npm install concurrently --save-dev
    ```
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/94e97685-b412-456b-886b-d963bc549b36)
 
 2. **Install nodemon**:
    It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.
@@ -33,6 +38,7 @@ Before testing the React app, there are some dependencies that need to be instal
    ```sh
    npm install nodemon --save-dev
    ```
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/8e7ef021-5cc0-49ed-bca0-6b488eab1484)
 
 3. **Update package.json**:
    In the Todo folder, open the `package.json` file. Change the `scripts` section and replace it with the code below:
@@ -55,7 +61,7 @@ Before testing the React app, there are some dependencies that need to be instal
    Open the `package.json` file:
    
    ```sh
-   vi package.json
+   nano package.json
    ```
 
    Add the key-value pair in the `package.json` file:
@@ -73,8 +79,14 @@ Before testing the React app, there are some dependencies that need to be instal
    npm run dev
    ```
 
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/3dd614f8-7c1e-411d-b9e5-251bc464c996)
+
    Your app should open and start running on `http://localhost:3000`.
 
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1fd06a01-aa84-4741-83b0-e4891d1c34b0)
+
 > **Important note**: In order to be able to access the application from the Internet, you have to open TCP port 3000 on EC2 by adding a new Security Group rule. You already know how to do it.
+
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/41e93df4-af6c-4c25-bd7a-206153b61447)
 
 By following these steps, you will have your frontend set up and running, ready to interact with your backend API.
