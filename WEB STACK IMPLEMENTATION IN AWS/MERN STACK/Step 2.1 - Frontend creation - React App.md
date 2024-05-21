@@ -1,7 +1,7 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 2 - Frontend Creation
+# Step 2.1 - Frontend Creation
 
 Since we are done with the functionality we want from our backend and API, it is time to create a user interface for a Web client (browser) to interact with the application via API. To start out with the frontend of the To-do app, we will use the `create-react-app` command to scaffold our app.
 
