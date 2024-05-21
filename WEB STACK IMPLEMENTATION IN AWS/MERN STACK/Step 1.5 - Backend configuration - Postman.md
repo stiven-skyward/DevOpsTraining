@@ -51,6 +51,7 @@ Create a GET request to your API:
 ```
 http://<PublicIP-or-PublicDNS>:5000/api/todos
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/d41c68a3-8bb4-4011-bdff-c4d8d12019ed)
 
 This request retrieves all existing records from our To-Do application (backend requests these records from the database and sends them back as a response to the GET request).
 
@@ -69,6 +70,7 @@ Replace `<taskID>` with the actual ID of the task you want to delete.
 ```
 http://<PublicIP-or-PublicDNS>:5000/api/todos/60d21b4667d0d8992e610c85
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e5b544ea-f010-4491-87fe-87b3208b3e0b)
 
 ## Summary
 
