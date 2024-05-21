@@ -12,6 +12,7 @@ To use Express, install it using npm:
 ```sh
 npm install express
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f4dba715-db97-47ee-a111-fe341f6b686f)
 
 ## Create `index.js`
 
@@ -23,6 +24,8 @@ touch index.js
 
 Run `ls` to confirm that your `index.js` file is successfully created.
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c654235d-5be6-4939-b15d-86a01a44fe92)
+
 ## Install dotenv Module
 
 Install the `dotenv` module to manage environment variables:
@@ -30,6 +33,7 @@ Install the `dotenv` module to manage environment variables:
 ```sh
 npm install dotenv
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/3231dc6d-9359-4944-8977-2a0b54e60818)
 
 ## Edit `index.js`
 
@@ -38,6 +42,7 @@ Open the `index.js` file with the command below:
 ```sh
 nano index.js
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c755a967-2677-495c-bdc6-74892cf1f651)
 
 Type the code below into it and save. Do not get overwhelmed by the code you see. For now, simply paste the code into the file.
 
@@ -78,9 +83,13 @@ node index.js
 
 If everything goes well, you should see `Server running on port 5000` in your terminal.
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b1affde8-e667-4e1a-8cec-bee636f252a4)
+
 ## Open Port 5000 in EC2 Security Groups
 
 Now we need to open this port in EC2 Security Groups. Refer to **Project 1 Step 1 – Installing the Nginx Web Server**. There we created an inbound rule to open TCP port 80; you need to do the same for port 5000.
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/126941f3-5391-4e65-9694-185e690fc88e)
 
 ## Access the Server
 
@@ -96,6 +105,8 @@ http://<PublicIP-or-PublicDNS>:5000
 - Run `curl -s http://169.254.169.254/latest/meta-data/public-ipv4` for Public IP address or `curl -s http://169.254.169.254/latest/meta-data/public-hostname` for Public DNS name.
 
 You should see `Welcome to Express` in your browser.
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/4019ab14-7ba9-4bac-bdfc-ee72b27cc61f)
 
 ## Routes
 
