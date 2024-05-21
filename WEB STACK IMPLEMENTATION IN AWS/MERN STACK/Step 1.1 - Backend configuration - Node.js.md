@@ -13,7 +13,7 @@ sudo apt upgrade
 ```
 ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/5a9a8672-69f5-482d-85d8-1f9f6acd63e0)
 
-## Install Node.js
+## 1.1 Install Node.js
 
 Let's get the location of Node.js software from Ubuntu repositories:
 
