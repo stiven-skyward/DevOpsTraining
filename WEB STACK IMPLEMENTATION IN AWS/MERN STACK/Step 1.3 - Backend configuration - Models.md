@@ -26,6 +26,7 @@ Install Mongoose:
 ```sh
 npm install mongoose
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/79ddd9e0-cc9e-4f10-9678-ffe7982d9969)
 
 ## Create the Models Directory and File
 
@@ -75,6 +76,8 @@ module.exports = Todo;
 
 Save and exit the file.
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/37a57db0-4058-4bec-b5d3-c6117881e579)
+
 ## Update Routes to Use the New Model
 
 We need to update our routes in the `api.js` file in the `routes` directory to make use of the new model.
@@ -119,5 +122,6 @@ router.delete('/todos/:id', (req, res, next) => {
 
 module.exports = router;
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c31892f7-324d-4839-b7f7-158cabc326a9)
 
 Save and exit the file.
