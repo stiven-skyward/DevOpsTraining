@@ -1,80 +1,160 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 1 – Installing the Nginx Web Server
+# Step 1.2 - Installing ExpressJS
 
-In order to display web pages to our site visitors, we are going to employ Nginx, a high-performance web server. We’ll use the `apt` package manager to install this package.
+Express is a framework for Node.js that simplifies development by abstracting a lot of low-level details. For example, Express helps define routes of your application based on HTTP methods and URLs.
 
-## Update the Package Index
+## Install Express
 
-Since this is our first time using `apt` for this session, start off by updating your server’s package index:
-```sh
-sudo apt update
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1f1cbf37-cac5-4cfd-8ab1-b3b707776713)
-
-## Install Nginx
-
-Following that, you can use apt install to get Nginx installed:
+To use Express, install it using npm:
 
 ```sh
-sudo apt install nginx
+npm install express
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/01faa500-4bd5-4fb3-9b8d-5f16467e7ded)
 
-When prompted, enter Y to confirm that you want to install Nginx. Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
+## Create `index.js`
 
-### Verify Nginx Installation
-
-To verify that Nginx was successfully installed and is running as a service in Ubuntu, run:
+Now create a file `index.js` with the command below:
 
 ```sh
-sudo systemctl status nginx
+touch index.js
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ef47d254-8bc8-4cb5-8ac0-7451e2875c9b)
 
-If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
+Run `ls` to confirm that your `index.js` file is successfully created.
 
-## Open TCP Port 80
+## Install dotenv Module
 
-Before we can receive any traffic by our Web Server, we need to open TCP port 80, which is the default port that web browsers use to access web pages on the Internet.
-
-As we know, we have TCP port 22 open by default on our EC2 machine to access it via SSH, so we need to add a rule to EC2 configuration to open inbound connection through port 80.
-
-Our server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means 'from any IP address').
-
-## Test Local Access
-
-First, let us try to check how we can access it locally in our Ubuntu shell. Run:
+Install the `dotenv` module to manage environment variables:
 
 ```sh
-curl http://localhost:80
+npm install dotenv
 ```
 
-or
+## Edit `index.js`
+
+Open the `index.js` file with the command below:
 
 ```sh
-curl http://127.0.0.1:80
+nano index.js
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b03de205-2e71-44ae-b681-129b5e0d8fd6)
 
-These two commands above actually do pretty much the same - they use the `curl` command to request our Nginx on port 80 (actually you can even try not specifying any port - it will work anyway). The difference is that in the first case we try to access our server via DNS name and in the second one - by IP address (in this case, IP address `127.0.0.1` corresponds to DNS name `localhost`, and the process of converting a DNS name to IP address is called "resolution"). We will touch DNS in further lectures and projects.
+Type the code below into it and save. Do not get overwhelmed by the code you see. For now, simply paste the code into the file.
 
-As an output, you can see some strangely formatted text. Do not worry; we just made sure that our Nginx web service responds to the `curl` command with some payload.
+```javascript
+const express = require('express');
+require('dotenv').config();
 
-## Test Internet Access
+const app = express();
 
-Now it is time for us to test how our Nginx server can respond to requests from the Internet. Open a web browser of your choice and try to access the following URL:
+const port = process.env.PORT || 5000;
 
-```vbnet
-http://<Public-IP-Address>:80
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.use((req, res, next) => {
+    res.send('Welcome to Express');
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`)
+});
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6124326b-5492-4010-8d8c-9ac9777c09c4)
 
-Another way to retrieve your Public IP address, other than checking it in the AWS Web console, is to use the following command:
+Notice that we have specified to use port `5000` in the code. This will be required later when we go on the browser.
+
+Use `Ctrl`+`O` and press `ENTER` to save in nano and use `Ctrl`+`X` to exit nano.
+
+## Start the Server
+
+Now it is time to start our server to see if it works. Open your terminal in the same directory as your `index.js` file and type:
 
 ```sh
-curl -s http://169.254.169.254/latest/meta-data/public-ipv4
+node index.js
 ```
 
-The URL in the browser shall also work if you do not specify the port number since all web browsers use port 80 by default.
+If everything goes well, you should see `Server running on port 5000` in your terminal.
+
+## Open Port 5000 in EC2 Security Groups
+
+Now we need to open this port in EC2 Security Groups. Refer to **Project 1 Step 1 – Installing the Nginx Web Server**. There we created an inbound rule to open TCP port 80; you need to do the same for port 5000.
+
+## Access the Server
+
+Open up your browser and try to access your server's Public IP or Public DNS name followed by port 5000:
+
+```sh
+http://<PublicIP-or-PublicDNS>:5000
+```
+
+### Quick Reminder: How to Get Your Server's Public IP and Public DNS Name
+
+- You can find it in your AWS web console in EC2 details.
+- Run `curl -s http://169.254.169.254/latest/meta-data/public-ipv4` for Public IP address or `curl -s http://169.254.169.254/latest/meta-data/public-hostname` for Public DNS name.
+
+You should see `Welcome to Express` in your browser.
+
+## Routes
+
+There are three actions that our To-Do application needs to be able to do:
+- Create a new task
+- Display list of all tasks
+- Delete a completed task
+
+Each task will be associated with some particular endpoint and will use different standard HTTP request methods: `POST`, `GET`, `DELETE`.
+
+For each task, we need to create routes that will define various endpoints that the To-Do app will depend on.
+
+## Create Routes Directory
+
+Let's create a folder `routes`:
+
+```sh
+mkdir routes
+```
+
+> **Tip:** You can open multiple shells in Putty or Linux/Mac to connect to the same EC2 instance.
+
+Change directory to the `routes` folder:
+
+```sh
+cd routes
+```
+
+Now, create a file `api.js` with the command below:
+
+```sh
+touch api.js
+```
+
+Open the file with the command below:
+
+```sh
+vim api.js
+```
+
+Copy the code below into the file. (Do not be overwhelmed with the code):
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+router.get('/todos', (req, res, next) => {
+    // Code to get all todos
+});
+
+router.post('/todos', (req, res, next) => {
+    // Code to create a new todo
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+    // Code to delete a todo
+});
+
+module.exports = router;
+```
+
+Save and exit the file.
