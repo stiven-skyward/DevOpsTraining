@@ -1,80 +1,80 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 1 – Installing the Nginx Web Server
+# Step 2 - Frontend Creation
 
-In order to display web pages to our site visitors, we are going to employ Nginx, a high-performance web server. We’ll use the `apt` package manager to install this package.
+Since we are done with the functionality we want from our backend and API, it is time to create a user interface for a Web client (browser) to interact with the application via API. To start out with the frontend of the To-do app, we will use the `create-react-app` command to scaffold our app.
 
-## Update the Package Index
+## Setting Up the React App
 
-Since this is our first time using `apt` for this session, start off by updating your server’s package index:
-```sh
-sudo apt update
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1f1cbf37-cac5-4cfd-8ab1-b3b707776713)
+1. **Create React App**:
+   In the same root directory as your backend code, which is the Todo directory, run:
+   
+   ```sh
+   npx create-react-app client
+   ```
+   
+   This will create a new folder in your Todo directory called `client`, where you will add all the React code.
 
-## Install Nginx
+## Running a React App
 
-Following that, you can use apt install to get Nginx installed:
+Before testing the React app, there are some dependencies that need to be installed.
 
-```sh
-sudo apt install nginx
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/01faa500-4bd5-4fb3-9b8d-5f16467e7ded)
+1. **Install concurrently**:
+   It is used to run more than one command simultaneously from the same terminal window.
+   
+   ```sh
+   npm install concurrently --save-dev
+   ```
 
-When prompted, enter Y to confirm that you want to install Nginx. Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
+2. **Install nodemon**:
+   It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.
+   
+   ```sh
+   npm install nodemon --save-dev
+   ```
 
-### Verify Nginx Installation
+3. **Update package.json**:
+   In the Todo folder, open the `package.json` file. Change the `scripts` section and replace it with the code below:
+   
+   ```json
+   "scripts": {
+       "start": "node index.js",
+       "start-watch": "nodemon index.js",
+       "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+   },
+   ```
 
-To verify that Nginx was successfully installed and is running as a service in Ubuntu, run:
+4. **Configure Proxy in package.json**:
+   Change directory to `client`:
+   
+   ```sh
+   cd client
+   ```
 
-```sh
-sudo systemctl status nginx
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ef47d254-8bc8-4cb5-8ac0-7451e2875c9b)
+   Open the `package.json` file:
+   
+   ```sh
+   vi package.json
+   ```
 
-If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
+   Add the key-value pair in the `package.json` file:
+   
+   ```json
+   "proxy": "http://localhost:5000"
+   ```
 
-## Open TCP Port 80
+   The whole purpose of adding the proxy configuration above is to make it possible to access the application directly from the browser by simply calling the server URL like `http://localhost:5000` rather than always including the entire path like `http://localhost:5000/api/todos`.
 
-Before we can receive any traffic by our Web Server, we need to open TCP port 80, which is the default port that web browsers use to access web pages on the Internet.
+5. **Run the App**:
+   Now, ensure you are inside the Todo directory, and simply run:
+   
+   ```sh
+   npm run dev
+   ```
 
-As we know, we have TCP port 22 open by default on our EC2 machine to access it via SSH, so we need to add a rule to EC2 configuration to open inbound connection through port 80.
+   Your app should open and start running on `http://localhost:3000`.
 
-Our server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means 'from any IP address').
+> **Important note**: In order to be able to access the application from the Internet, you have to open TCP port 3000 on EC2 by adding a new Security Group rule. You already know how to do it.
 
-## Test Local Access
-
-First, let us try to check how we can access it locally in our Ubuntu shell. Run:
-
-```sh
-curl http://localhost:80
-```
-
-or
-
-```sh
-curl http://127.0.0.1:80
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b03de205-2e71-44ae-b681-129b5e0d8fd6)
-
-These two commands above actually do pretty much the same - they use the `curl` command to request our Nginx on port 80 (actually you can even try not specifying any port - it will work anyway). The difference is that in the first case we try to access our server via DNS name and in the second one - by IP address (in this case, IP address `127.0.0.1` corresponds to DNS name `localhost`, and the process of converting a DNS name to IP address is called "resolution"). We will touch DNS in further lectures and projects.
-
-As an output, you can see some strangely formatted text. Do not worry; we just made sure that our Nginx web service responds to the `curl` command with some payload.
-
-## Test Internet Access
-
-Now it is time for us to test how our Nginx server can respond to requests from the Internet. Open a web browser of your choice and try to access the following URL:
-
-```vbnet
-http://<Public-IP-Address>:80
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6124326b-5492-4010-8d8c-9ac9777c09c4)
-
-Another way to retrieve your Public IP address, other than checking it in the AWS Web console, is to use the following command:
-
-```sh
-curl -s http://169.254.169.254/latest/meta-data/public-ipv4
-```
-
-The URL in the browser shall also work if you do not specify the port number since all web browsers use port 80 by default.
+By following these steps, you will have your frontend set up and running, ready to interact with your backend API.
