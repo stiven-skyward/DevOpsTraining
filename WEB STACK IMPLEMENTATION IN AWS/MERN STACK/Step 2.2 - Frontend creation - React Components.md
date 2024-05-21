@@ -1,7 +1,7 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 2 - Creating Your React Components
+# Step 2.2 - Creating Your React Components
 
 One of the advantages of React is that it makes use of components, which are reusable and also make the code modular. For our Todo app, there will be two stateful components and one stateless component. 
 
@@ -42,7 +42,7 @@ One of the advantages of React is that it makes use of components, which are reu
 1. **Open the `Input.js` file**:
 
    ```sh
-   vi Input.js
+   nano Input.js
    ```
 
 2. **Copy and paste the following code into `Input.js`**:
@@ -97,13 +97,15 @@ One of the advantages of React is that it makes use of components, which are reu
    cd ../..
    npm install axios
    ```
+   
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/3837a5e5-e16c-47a7-8274-b510d9ae20bc)
 
 ### Creating the `ListTodo` Component
 
 1. **Open the `ListTodo.js` file**:
 
    ```sh
-   vi ListTodo.js
+   nano ListTodo.js
    ```
 
 2. **Copy and paste the following code into `ListTodo.js`**:
@@ -133,7 +135,7 @@ One of the advantages of React is that it makes use of components, which are reu
 1. **Open the `Todo.js` file**:
 
    ```sh
-   vi Todo.js
+   nano Todo.js
    ```
 
 2. **Copy and paste the following code into `Todo.js`**:
@@ -200,7 +202,7 @@ One of the advantages of React is that it makes use of components, which are reu
 2. **Open the `App.js` file**:
 
    ```sh
-   vi App.js
+   nano App.js
    ```
 
 3. **Copy and paste the following code into `App.js`**:
@@ -226,7 +228,7 @@ One of the advantages of React is that it makes use of components, which are reu
 1. **Open the `App.css` file**:
 
    ```sh
-   vi App.css
+   nano App.css
    ```
 
 2. **Copy and paste the following code into `App.css`**:
@@ -324,7 +326,7 @@ One of the advantages of React is that it makes use of components, which are reu
 3. **Open the `index.css` file**:
 
    ```sh
-   vi index.css
+   nano index.css
    ```
 
 4. **Copy and paste the following code into `index.css`**:
@@ -362,5 +364,7 @@ One of the advantages of React is that it makes use of components, which are reu
    ```sh
    npm run dev
    ```
+
+   ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/aefecfab-a105-4480-b1f4-03ff90b4de1c)
 
 Assuming there are no errors when saving all these files, our To-Do app should be ready and fully functional with the functionality discussed earlier: creating a task, deleting a task, and viewing all your tasks.
