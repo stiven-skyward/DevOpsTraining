@@ -143,7 +143,7 @@ touch api.js
 Open the file with the command below:
 
 ```sh
-vim api.js
+nano api.js
 ```
 
 Copy the code below into the file. (Do not be overwhelmed with the code):
@@ -166,5 +166,6 @@ router.delete('/todos/:id', (req, res, next) => {
 
 module.exports = router;
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6e766e69-3b38-4970-9402-64fdc8437cd8)
 
 Save and exit the file.
