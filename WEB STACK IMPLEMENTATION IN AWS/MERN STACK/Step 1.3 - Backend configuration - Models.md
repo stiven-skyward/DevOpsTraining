@@ -1,80 +1,123 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 1 – Installing the Nginx Web Server
+# Step 1.3 - Models
 
-In order to display web pages to our site visitors, we are going to employ Nginx, a high-performance web server. We’ll use the `apt` package manager to install this package.
+Now comes the interesting part. Since the app is going to make use of MongoDB, which is a NoSQL database, we need to create a model.
 
-## Update the Package Index
+A model is at the heart of JavaScript-based applications, and it is what makes them interactive.
 
-Since this is our first time using `apt` for this session, start off by updating your server’s package index:
-```sh
-sudo apt update
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1f1cbf37-cac5-4cfd-8ab1-b3b707776713)
+We will also use models to define the database schema. This is important so that we can define the fields stored in each MongoDB document. This may seem like a lot of information, but don't worry, everything will become clear to you over time. I promise!
 
-## Install Nginx
+In essence, the Schema is a blueprint of how the database will be constructed, including other data fields that may not be required to be stored in the database. These are known as virtual properties.
 
-Following that, you can use apt install to get Nginx installed:
+## Install Mongoose
 
-```sh
-sudo apt install nginx
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/01faa500-4bd5-4fb3-9b8d-5f16467e7ded)
+To create a Schema and a model, install Mongoose, which is a Node.js package that makes working with MongoDB easier.
 
-When prompted, enter Y to confirm that you want to install Nginx. Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
-
-### Verify Nginx Installation
-
-To verify that Nginx was successfully installed and is running as a service in Ubuntu, run:
+Change directory back to the Todo folder:
 
 ```sh
-sudo systemctl status nginx
+cd ..
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ef47d254-8bc8-4cb5-8ac0-7451e2875c9b)
 
-If it is green and running, then you did everything correctly - you have just launched your first Web Server in the Clouds!
-
-## Open TCP Port 80
-
-Before we can receive any traffic by our Web Server, we need to open TCP port 80, which is the default port that web browsers use to access web pages on the Internet.
-
-As we know, we have TCP port 22 open by default on our EC2 machine to access it via SSH, so we need to add a rule to EC2 configuration to open inbound connection through port 80.
-
-Our server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means 'from any IP address').
-
-## Test Local Access
-
-First, let us try to check how we can access it locally in our Ubuntu shell. Run:
+Install Mongoose:
 
 ```sh
-curl http://localhost:80
+npm install mongoose
 ```
 
-or
+## Create the Models Directory and File
+
+Create a new folder for models:
 
 ```sh
-curl http://127.0.0.1:80
+mkdir models
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b03de205-2e71-44ae-b681-129b5e0d8fd6)
 
-These two commands above actually do pretty much the same - they use the `curl` command to request our Nginx on port 80 (actually you can even try not specifying any port - it will work anyway). The difference is that in the first case we try to access our server via DNS name and in the second one - by IP address (in this case, IP address `127.0.0.1` corresponds to DNS name `localhost`, and the process of converting a DNS name to IP address is called "resolution"). We will touch DNS in further lectures and projects.
-
-As an output, you can see some strangely formatted text. Do not worry; we just made sure that our Nginx web service responds to the `curl` command with some payload.
-
-## Test Internet Access
-
-Now it is time for us to test how our Nginx server can respond to requests from the Internet. Open a web browser of your choice and try to access the following URL:
-
-```vbnet
-http://<Public-IP-Address>:80
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6124326b-5492-4010-8d8c-9ac9777c09c4)
-
-Another way to retrieve your Public IP address, other than checking it in the AWS Web console, is to use the following command:
+Change directory into the newly created `models` folder:
 
 ```sh
-curl -s http://169.254.169.254/latest/meta-data/public-ipv4
+cd models
 ```
 
-The URL in the browser shall also work if you do not specify the port number since all web browsers use port 80 by default.
+Inside the `models` folder, create a file named `todo.js`:
+
+```sh
+touch todo.js
+```
+
+> **Tip:** All three commands above can be defined in one line to be executed consecutively with the help of the `&&` operator, like this:
+>
+> ```sh
+> mkdir models && cd models && touch todo.js
+> ```
+
+Open the file created with `nano todo.js`, then paste the code below into the file:
+
+```javascript
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// Create schema for todo
+const TodoSchema = new Schema({
+    action: {
+        type: String,
+        required: [true, 'The todo text field is required']
+    }
+});
+
+// Create model for todo
+const Todo = mongoose.model('todo', TodoSchema);
+
+module.exports = Todo;
+```
+
+Save and exit the file.
+
+## Update Routes to Use the New Model
+
+We need to update our routes in the `api.js` file in the `routes` directory to make use of the new model.
+
+Change directory to the `routes` directory:
+
+```sh
+cd ../routes
+```
+
+Open `api.js` with `nano api.js`, delete the existing code, and paste the code below into it:
+
+```javascript
+const express = require('express');
+const router = express.Router();
+const Todo = require('../models/todo');
+
+router.get('/todos', (req, res, next) => {
+    // This will return all the data, exposing only the id and action field to the client
+    Todo.find({}, 'action')
+        .then(data => res.json(data))
+        .catch(next);
+});
+
+router.post('/todos', (req, res, next) => {
+    if (req.body.action) {
+        Todo.create(req.body)
+            .then(data => res.json(data))
+            .catch(next);
+    } else {
+        res.json({
+            error: "The input field is empty"
+        });
+    }
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+    Todo.findOneAndDelete({ "_id": req.params.id })
+        .then(data => res.json(data))
+        .catch(next);
+});
+
+module.exports = router;
+```
+
+Save and exit the file.
