@@ -36,7 +36,7 @@ sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 Use the NodeSource setup script to add the Node.js 20.x repository to your system:
 
 ```sh
-curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 ```
 ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/77f45171-ff4b-4b73-b365-53f2dc80e970)
 
