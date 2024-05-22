@@ -22,7 +22,7 @@ AngularJS provides a web framework for creating dynamic views in your web applic
 3. **Add a file named `script.js`**:
 
     ```sh
-    vi script.js
+    nano script.js
     ```
 
 4. **Copy and paste the following code into `script.js`**:
@@ -72,7 +72,7 @@ AngularJS provides a web framework for creating dynamic views in your web applic
 5. **In the `public` folder, create a file named `index.html`**:
 
     ```sh
-    vi index.html
+    nano index.html
     ```
 
 6. **Copy and paste the following code into `index.html`**:
