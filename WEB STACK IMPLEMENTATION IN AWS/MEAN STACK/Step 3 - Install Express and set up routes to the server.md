@@ -26,7 +26,7 @@ sudo npm install express mongoose
 2. **Create a file named `routes.js`**:
 
     ```sh
-    vi routes.js
+    nano routes.js
     ```
 
 3. **Copy and paste the following code into `routes.js`**:
@@ -85,7 +85,7 @@ sudo npm install express mongoose
 2. **Create a file named `book.js`**:
 
     ```sh
-    vi book.js
+    nano book.js
     ```
 
 3. **Copy and paste the following code into `book.js`**:
@@ -107,5 +107,6 @@ sudo npm install express mongoose
     var Book = mongoose.model('Book', bookSchema);
     module.exports = mongoose.model('Book', bookSchema);
     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/74557e5c-98c1-4424-beda-dd297002d827)
 
 By following these steps, you will have set up Express and configured the routes to handle CRUD operations for your book register. You will also have established a Mongoose schema to interact with your MongoDB database.
