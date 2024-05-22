@@ -38,7 +38,7 @@ Use the NodeSource setup script to add the Node.js 20.x repository to your syste
 ```sh
 curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/77f45171-ff4b-4b73-b365-53f2dc80e970)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/dc2922d7-fbc6-43c6-b191-7f37652eda29)
 
 ## Install Node.js
 
@@ -47,7 +47,7 @@ Finally, install Node.js and npm (Node Package Manager):
 ```sh
 sudo apt install -y nodejs
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/64506135-affe-49cb-b6e6-65b1c14c93fb)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e217decc-160d-44d6-a148-19afe8d6b29a)
 
 You can verify the installation by checking the versions of Node.js and npm:
 
