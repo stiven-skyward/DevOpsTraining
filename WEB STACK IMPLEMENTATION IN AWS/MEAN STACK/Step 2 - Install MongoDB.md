@@ -53,8 +53,9 @@ sudo systemctl status mongod
 Install npm, which is the package manager for Node.js:
 
 ```sh
-sudo apt install -y npm
+curl -L https://www.npmjs.com/install.sh | sudo sh
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ff1f9e39-3f3b-4a5a-87db-795805f67f39)
 
 ## Install 'body-parser' Package
 
@@ -63,6 +64,7 @@ We need the 'body-parser' package to help us process JSON files passed in reques
 ```sh
 sudo npm install body-parser
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/34ff9e5a-bec8-46e8-a0ba-bbb0bb581b9a)
 
 ## Set Up the Books Directory
 
@@ -79,13 +81,14 @@ In the 'Books' directory, initialize a new npm project:
 ```sh
 npm init
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f701cfb3-bcf2-4c80-9961-5e2b7bcec712)
 
 ## Create the `server.js` File
 
 Add a file named `server.js`:
 
 ```sh
-vi server.js
+nano server.js
 ```
 
 Copy and paste the following web server code into the `server.js` file:
