@@ -27,7 +27,7 @@ Key: Name
 Value: Project X Server
 ```
 
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ffcd9c76-2473-4af3-9a56-8519e3dfb384)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/9a0c7e86-4f2c-45be-afef-0f2262a53ad8)
 
 ## Connecting to Your EC2 Instance
 

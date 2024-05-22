@@ -22,7 +22,7 @@ AngularJS provides a web framework for creating dynamic views in your web applic
 3. **Add a file named `script.js`**:
 
     ```sh
-    vi script.js
+    nano script.js
     ```
 
 4. **Copy and paste the following code into `script.js`**:
@@ -72,7 +72,7 @@ AngularJS provides a web framework for creating dynamic views in your web applic
 5. **In the `public` folder, create a file named `index.html`**:
 
     ```sh
-    vi index.html
+    nano index.html
     ```
 
 6. **Copy and paste the following code into `index.html`**:
@@ -147,8 +147,11 @@ The server is now up and running, and we can connect to it via port 3300. You ca
 ```sh
 curl -s http://localhost:3300
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/05720138-79d1-4a17-821e-2a0ac6cb7ea3)
 
 It should return an HTML page. Although it may be hard to read in the CLI, you can also try and access it from the Internet.
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/1ec264c2-50ba-43a6-9561-cea2931f7ef0)
 
 ## Open TCP Port 3300 in AWS
 
@@ -158,7 +161,7 @@ You should already know how to do this. If you have forgotten, refer to Project 
 
 Your Security group should look like this:
 
-![Security Group Configuration](path/to/security-group-image.png)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/8c620bc0-e483-4013-8dfe-4b9bd6a0bf39)
 
 Now you can access our Book Register web application from the Internet with a browser using the Public IP address or Public DNS name.
 
@@ -168,5 +171,3 @@ Now you can access our Book Register web application from the Internet with a br
 - Run `curl -s http://169.254.169.254/latest/meta-data/public-ipv4` for the Public IP address or `curl -s http://169.254.169.254/latest/meta-data/public-hostname` for the Public DNS name.
 
 By following these steps, you will set up AngularJS to interact with your Express routes and MongoDB database, enabling a full-stack web application.
-
-+ + + 

@@ -20,6 +20,7 @@ Next, upgrade the installed packages to their latest versions:
 ```sh
 sudo apt upgrade
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/cc570bca-2c5a-47d4-a1eb-e3008ea74e75)
 
 ## Add Certificates
 
@@ -28,14 +29,16 @@ Install necessary certificates and tools for fetching and verifying Node.js pack
 ```sh
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f6ad5cb8-5f7f-4e34-b587-87aa4bfc2090)
 
 ## Add Node.js Repository
 
-Use the NodeSource setup script to add the Node.js 12.x repository to your system:
+Use the NodeSource setup script to add the Node.js 20.x repository to your system:
 
 ```sh
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/dc2922d7-fbc6-43c6-b191-7f37652eda29)
 
 ## Install Node.js
 
@@ -44,6 +47,7 @@ Finally, install Node.js and npm (Node Package Manager):
 ```sh
 sudo apt install -y nodejs
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e217decc-160d-44d6-a148-19afe8d6b29a)
 
 You can verify the installation by checking the versions of Node.js and npm:
 
@@ -51,5 +55,6 @@ You can verify the installation by checking the versions of Node.js and npm:
 node -v
 npm -v
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/fc8b33d7-bc6e-4629-9f54-40e99c09665a)
 
 By following these steps, you will have Node.js installed on your Ubuntu system.
