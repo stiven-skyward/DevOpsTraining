@@ -55,6 +55,6 @@ You can verify the installation by checking the versions of Node.js and npm:
 node -v
 npm -v
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/5afa36b0-a484-48fb-bc8b-d9442fd71ee3)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/fc8b33d7-bc6e-4629-9f54-40e99c09665a)
 
 By following these steps, you will have Node.js installed on your Ubuntu system.
