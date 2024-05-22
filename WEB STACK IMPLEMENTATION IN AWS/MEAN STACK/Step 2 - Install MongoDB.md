@@ -7,16 +7,16 @@ MongoDB stores data in flexible, JSON-like documents. Fields in a database can v
 
 ## Add MongoDB Repository
 
-First, add the MongoDB repository key:
+First get the repository key of the latest version with the command:
 
 ```sh
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+curl -fsSL https://pgp.mongodb.com/server-7.0.asc |  sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
 ```
 
 Then, add the MongoDB repository to your sources list:
 
 ```sh
-echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 ```
 
 ## Install MongoDB
@@ -25,15 +25,16 @@ Update the package list and install MongoDB:
 
 ```sh
 sudo apt update
-sudo apt install -y mongodb
+sudo apt install mongodb-org -y
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f8afd54a-7471-4126-b46a-1437d47a535b)
 
 ## Start the MongoDB Server
 
 Start the MongoDB service:
 
 ```sh
-sudo service mongodb start
+sudo systemctl start mongod
 ```
 
 ## Verify that the Service is Running
@@ -41,10 +42,13 @@ sudo service mongodb start
 Check the status of the MongoDB service to ensure it is up and running:
 
 ```sh
-sudo systemctl status mongodb
+sudo systemctl status mongod
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f2c6f5f4-590f-49a9-a51b-f8e060bd4f0a)
 
 ## Install npm (Node Package Manager)
+
+
 
 Install npm, which is the package manager for Node.js:
 
