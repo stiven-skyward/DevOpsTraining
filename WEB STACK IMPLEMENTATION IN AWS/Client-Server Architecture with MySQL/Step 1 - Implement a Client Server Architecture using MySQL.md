@@ -31,11 +31,12 @@ sudo apt install mysql-server
 sudo systemctl start mysql
 sudo systemctl enable mysql
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/777b70dc-d170-4010-861f-5ea38cd77d38)
 
 ### Configure MySQL to Allow Remote Connections:
 
 ```sh
-sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
 
 Replace `127.0.0.1` with `0.0.0.0` in the `bind-address` line:
@@ -43,6 +44,7 @@ Replace `127.0.0.1` with `0.0.0.0` in the `bind-address` line:
 ```ini
 bind-address = 0.0.0.0
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/b3b6a131-60e9-4986-b1ac-787922ed9c20)
 
 ### Restart MySQL Service:
 
@@ -52,11 +54,18 @@ sudo systemctl restart mysql
 
 ### Create a MySQL User for Remote Access:
 
-```sql
+```sh
 sudo mysql -u root
+```
+```sql
 CREATE USER 'remote_user'@'%' IDENTIFIED BY 'password';
+```
+```sql
 GRANT ALL PRIVILEGES ON *.* TO 'remote_user'@'%';
+```
+```sql
 FLUSH PRIVILEGES;
+```
 EXIT;
 ```
 
