@@ -66,6 +66,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'remote_user'@'%';
 ```sql
 FLUSH PRIVILEGES;
 ```
+```sql
 EXIT;
 ```
 
