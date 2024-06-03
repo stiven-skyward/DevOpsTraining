@@ -119,18 +119,7 @@ SHOW DATABASES;
 
 If you see an output similar to the image below, you have successfully completed this project.
 
-## Example Output
-
-```
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/6055822c-53f8-4cba-9c70-5343a2f2554b)
 
 ## Congratulations!
 
@@ -166,4 +155,8 @@ You have deployed a fully functional MySQL Client-Server setup. Well done! You c
     ```sql
     SELECT * FROM mytable;
     ```
+
+    ![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/4e81bba7-1dab-4e3e-973f-cef0aaaea3f9)
+  
+
 
