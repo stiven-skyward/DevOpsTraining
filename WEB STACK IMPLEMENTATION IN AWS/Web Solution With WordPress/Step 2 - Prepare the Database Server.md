@@ -139,8 +139,11 @@
 
 6. **Access your WordPress installation**:
     - Open your browser and navigate to `http://<Web-Server-Public-IP-Address>/wordpress/`.
-    - Fill out your DB credentials.
 
-7. **If successful, you should see a message confirming that WordPress has connected to your remote MySQL database.**
+7. **If successful, you should see a screen for choosing the language and configuring the wordpress installation**
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e0a60713-6169-463b-8e28-a192e99dc3d2)
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f47dac0a-93e6-4cf3-ba6e-dc25bd8461f4)
 
 ### Important: Do not forget to STOP your EC2 instances after completion of the project to avoid extra costs.
