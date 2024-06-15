@@ -11,6 +11,8 @@ Launch an EC2 instance that will serve as your "Web Server". Create 3 volumes in
 
 Attach all three volumes one by one to your Web Server EC2 instance.
 
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/d46e8d17-8a45-4632-97ac-dbd4c6c40511)
+
 ### Open the Linux Terminal
 
 Open up the Linux terminal to begin configuration.
@@ -23,6 +25,7 @@ Use the `lsblk` command to inspect what block devices are attached to the server
 lsblk
 ls /dev/
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ffbfbcf7-93c2-4784-83d0-12c06eb9ee7d)
 
 ### View Mounts and Free Space
 
@@ -31,6 +34,7 @@ Use the `df -h` command to see all mounts and free space on your server.
 ```sh
 df -h
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/702a5c29-d455-4693-a765-1d2fd3b2db3b)
 
 ### Create Partitions on Each Disk
 
