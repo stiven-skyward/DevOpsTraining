@@ -225,6 +225,7 @@ Add the following lines (replace with your own UUIDs):
 UUID=<UUID-for-apps-lv> /var/www/html ext4 defaults 0 0
 UUID=<UUID-for-logs-lv> /var/log ext4 defaults 0 0
 ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/a16f3a18-3e0a-4167-8c73-7e1b38a739a5)
 
 ### Test the Configuration
 
@@ -238,4 +239,5 @@ Verify your setup by running:
 ```sh
 df -h
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ebcbc15e-0864-4335-91a9-030ddc1d267b)
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/2fd06ef5-12d1-49e4-bc7e-971e27b2bfdb)
+
