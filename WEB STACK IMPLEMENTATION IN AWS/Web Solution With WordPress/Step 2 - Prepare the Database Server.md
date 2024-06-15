@@ -1,10 +1,12 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-### Step 2 — Prepare the Database Server
+### Step 2 - Prepare the Database Server
 
 1. **Launch a second RedHat EC2 instance** that will have the role of 'DB Server'.
 2. **Repeat the same steps as for the Web Server**, but instead of `apps-lv`, create `db-lv` and mount it to the `/db` directory instead of `/var/www/html/`.
+
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/063f4d93-4d4b-420c-9fdf-5042c5e83327)
 
 ### Step 3 — Install WordPress on your Web Server EC2
 
@@ -23,6 +25,7 @@
     sudo systemctl enable httpd
     sudo systemctl start httpd
     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/8c0e00e0-814a-4ef4-85ed-3c3c44f93a08)
 
 4. **To install PHP and its dependencies**:
     ```sh
@@ -76,12 +79,14 @@
     ```sh
     sudo systemctl status mysqld
     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/89c77710-8a88-4d3d-8755-f607a2a6411a)
 
 4. **If it is not running, restart the service and enable it**:
     ```sh
     sudo systemctl restart mysqld
     sudo systemctl enable mysqld
     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e3476049-516f-4c3c-ba95-ba8bc4194972)
 
 ### Step 5 — Configure DB to work with WordPress
 
@@ -99,6 +104,7 @@
     SHOW DATABASES;
     exit;
     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/df79f33e-c23a-4715-95aa-66344403f53e)
 
 ### Step 6 — Configure WordPress to connect to remote database
 
@@ -108,19 +114,33 @@
     sudo yum install mysql
     sudo mysql -u myuser -p -h <DB-Server-Private-IP-address>
     ```
+![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f4d27008-0cd5-4896-8170-ae398ac6c79b)
 
 3. **Verify connection**:
     ```sql
     SHOW DATABASES;
     ```
 
-4. **Change permissions and configuration so Apache can use WordPress**:
+4. **Edit the wp-config.php file in the WordPress Web-Server ec2 instance**:
+    - Open the file and edit.
+    ```sh
+    sudo nano /var/www/html/wordpress/wp-config.php
+    ```
+    - Change the default database connection details:
+    ```
+    define('DB_NAME', 'wordpress');
+    define('DB_USER', 'ec2-user');
+    define('DB_PASSWORD', 'mypass');
+    define('DB_HOST', '172.31.27.112');  // WebServer private IP
+    ```
+
+5. **Change permissions and configuration so Apache can use WordPress**:
     - Enable TCP port 80 in Inbound Rules configuration for your Web Server EC2.
 
-5. **Access your WordPress installation**:
+6. **Access your WordPress installation**:
     - Open your browser and navigate to `http://<Web-Server-Public-IP-Address>/wordpress/`.
     - Fill out your DB credentials.
 
-6. **If successful, you should see a message confirming that WordPress has connected to your remote MySQL database.**
+7. **If successful, you should see a message confirming that WordPress has connected to your remote MySQL database.**
 
 ### Important: Do not forget to STOP your EC2 instances after completion of the project to avoid extra costs.
