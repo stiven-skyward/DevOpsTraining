@@ -45,25 +45,3 @@ To illustrate the Three-tier Architecture, consider a web-based e-commerce appli
 3. **Data Tier**: Manages data related to products, user accounts, and orders in a database.
 
 By separating these concerns, the application becomes more organized, easier to maintain, and scalable.
-
-### Hands-on Experience
-
-To gain practical experience with Three-tier Architecture, follow these steps:
-
-1. **Set Up the Environment**:
-    - Create three separate virtual servers (e.g., EC2 instances on AWS) for each tier.
-    - Ensure proper network configurations to allow communication between the servers.
-
-2. **Deploy the Presentation Tier**:
-    - Install a web server (like Nginx or Apache) on the server designated for the Presentation Tier.
-    - Deploy the front-end code (HTML, CSS, JavaScript).
-
-3. **Deploy the Logic Tier**:
-    - Set up an application server environment on the server designated for the Logic Tier.
-    - Deploy the back-end code and ensure it can communicate with both the Presentation and Data Tiers.
-
-4. **Set Up the Data Tier**:
-    - Install and configure a database server on the server designated for the Data Tier.
-    - Ensure the Logic Tier can connect to the database.
-
-By completing these steps, you will have a functional Three-tier Architecture application that showcases the separation of concerns and the benefits of this design pattern.
