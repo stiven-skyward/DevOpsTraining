@@ -1,243 +1,169 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# Step 1 - Prepare a Web Server
+# NFS Server Configuration on RHEL 8 for Web Servers and Jenkins
 
-### Launch an EC2 Instance
+## Step 1: Launch and Prepare the EC2 Instance
 
-Launch an EC2 instance that will serve as your "Web Server". Create 3 volumes in the same Availability Zone (AZ) as your Web Server EC2 instance, each with a size of 10 GiB.
+### Spin up a New EC2 Instance
+- Launch a new EC2 instance in AWS using the RHEL 8 Operating System.
+- Ensure that the instance is in the correct VPC and subnet with the necessary security group configurations to allow SSH access.
 
-### Attach Volumes to the EC2 Instance
+### Update the System
+- SSH into the EC2 instance and update the system packages.
 
-Attach all three volumes one by one to your Web Server EC2 instance.
-
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/d46e8d17-8a45-4632-97ac-dbd4c6c40511)
-
-### Open the Linux Terminal
-
-Open up the Linux terminal to begin configuration.
-
-### Inspect Block Devices
-
-Use the `lsblk` command to inspect what block devices are attached to the server. Notice the names of your newly created devices. All devices in Linux reside in the `/dev/` directory. Inspect it with `ls /dev/` and make sure you see all 3 newly created block devices there - their names will likely be `xvdf`, `xvdh`, and `xvdg`.
-
-```sh
-lsblk
-ls /dev/
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/ffbfbcf7-93c2-4784-83d0-12c06eb9ee7d)
-
-### View Mounts and Free Space
-
-Use the `df -h` command to see all mounts and free space on your server.
-
-```sh
-df -h
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/702a5c29-d455-4693-a765-1d2fd3b2db3b)
-
-### Create Partitions on Each Disk
-
-Use the `gdisk` utility to create a single partition on each of the 3 disks:
-
-```sh
-sudo gdisk /dev/xvdb
+```bash
+sudo yum -y update
 ```
 
-#### Example of `gdisk` Usage:
+## Configure LVM on the Server
 
-```plaintext
-GPT fdisk (gdisk) version 1.0.3
+### Create Physical Volumes
+- Identify the additional disks attached to your EC2 instance and create physical volumes (PVs) using `pvcreate`.
 
-Partition table scan:
-  MBR: not present
-  BSD: not present
-  APM: not present
-  GPT: not present
-
-Creating new GPT entries.
-
-Command (? for help): n
-Partition number (1-128, default 1): 1
-First sector (34-20971486, default = 2048) or {+-}size{KMGTP}: <Enter>
-Last sector (2048-20971486, default = 20971486) or {+-}size{KMGTP}: <Enter>
-Current type (L): 8300
-Hex code or GUID (L to show codes, Enter = 8300): 8E00
-Changed type of partition to 'Linux LVM'
-
-Command (? for help): w
-Do you want to proceed? (Y/N): yes
+```bash
+sudo pvcreate /dev/xvdb /dev/xvdc /dev/xvdd
 ```
 
-Repeat the above process for `/dev/xvdc` and `/dev/xvdd`.
+### Create a Volume Group
+- Create a Volume Group (VG) named `web_vg` that includes the physical volumes.
 
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/89ebad08-1919-4bc1-b547-3a555a5673e1)
-
-### View Configured Partitions
-
-Use the `lsblk` utility to view the newly configured partition on each of the 3 disks.
-
-```sh
-lsblk
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/a91726b6-7207-46f4-9e45-f792701bd58a)
-
-### Install `lvm2` Package
-
-Install the `lvm2` package and check for available partitions.
-
-```sh
-sudo yum install lvm2
-sudo lvmdiskscan
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e59e922a-9e89-427c-bcf9-48dad4292b2c)
-
-### Mark Disks as Physical Volumes (PVs)
-
-Use the `pvcreate` utility to mark each of the 3 disks as physical volumes (PVs) to be used by LVM.
-
-```sh
-sudo pvcreate /dev/xvdb1
-sudo pvcreate /dev/xvdc1
-sudo pvcreate /dev/xvdd1
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/946226e6-4d92-4d00-9c0f-5f391cebb46a)
-
-Verify that your Physical Volumes have been created successfully by running:
-
-```sh
-sudo pvs
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c398d0a1-32bb-4d4d-8f67-9e77453f7e87)
-
-### Create a Volume Group (VG)
-
-Use the `vgcreate` utility to add all 3 PVs to a volume group (VG). Name the VG `webdata-vg`.
-
-```sh
-sudo vgcreate webdata-vg /dev/xvdb1 /dev/xvdc1 /dev/xvdd1
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/93a222f7-83f1-430f-8664-c3e790b596b2)
-
-Verify that your VG has been created successfully by running:
-
-```sh
-sudo vgs
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/d84cc4fa-ebba-4614-98ed-b0dea490eebb)
-
-### Create Logical Volumes (LVs)
-
-Use the `lvcreate` utility to create 2 logical volumes: `apps-lv` (use half of the PV size) and `logs-lv` (use the remaining space).
-
-```sh
-sudo lvcreate -n apps-lv -L 14G webdata-vg
-sudo lvcreate -n logs-lv -L 14G webdata-vg
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/50f734af-9f03-43fc-a20d-b17a866f7bcd)
-
-Verify that your Logical Volumes have been created successfully by running:
-
-```sh
-sudo lvs
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/5f0ca39c-21f9-4550-bd20-2edbef0d6aa5)
-
-### Verify the Entire Setup
-
-```sh
-sudo vgdisplay -v
-sudo lsblk
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/639f1639-0224-4407-b64e-18d7edc81266)
-
-### Format the Logical Volumes
-
-Use `mkfs.ext4` to format the logical volumes with the ext4 filesystem.
-
-```sh
-sudo mkfs -t ext4 /dev/webdata-vg/apps-lv
-sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/c02d5f58-316f-41b9-a4cc-3873c5eecc67)
-
-### Create Directories for Mount Points
-
-Create the directories to store website files and backup log data.
-
-```sh
-sudo mkdir -p /var/www/html
-sudo mkdir -p /home/recovery/logs
+```bash
+sudo vgcreate web_vg /dev/xvdb /dev/xvdc /dev/xvdd
 ```
 
-### Mount Logical Volumes
+### Create Logical Volumes
+- Create the following logical volumes within the volume group:
+  - `lv-apps` (e.g., 10GB)
+  - `lv-logs` (e.g., 20GB)
+  - `lv-opt` (e.g., 5GB)
 
-Mount `/var/www/html` on `apps-lv` logical volume.
-
-```sh
-sudo mount /dev/webdata-vg/apps-lv /var/www/html/
+```bash
+sudo lvcreate -L 10G -n lv-apps web_vg
+sudo lvcreate -L 20G -n lv-logs web_vg
+sudo lvcreate -L 5G -n lv-opt web_vg
 ```
 
-### Backup Log Files
+### Format the Logical Volumes with XFS
+- Format the logical volumes using the XFS filesystem.
 
-Use the `rsync` utility to backup all the files in the log directory `/var/log` into `/home/recovery/logs`.
-
-```sh
-sudo rsync -av /var/log/ /home/recovery/logs/
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/66e27659-b4b4-4870-b400-a3bb94331790)
-
-### Mount `logs-lv` Logical Volume
-
-Mount `/var/log` on `logs-lv` logical volume.
-
-```sh
-sudo mount /dev/webdata-vg/logs-lv /var/log
+```bash
+sudo mkfs.xfs /dev/web_vg/lv-apps
+sudo mkfs.xfs /dev/web_vg/lv-logs
+sudo mkfs.xfs /dev/web_vg/lv-opt
 ```
 
-### Restore Log Files
+## Create Mount Points and Mount the Volumes
 
-Restore log files back into the `/var/log` directory.
+### Create Mount Points
+- Create directories in the `/mnt` directory for each logical volume.
 
-```sh
-sudo rsync -av /home/recovery/logs/ /var/log
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/0aaa7376-f88c-4573-be6b-180914dfee2b)
-
-### Update `/etc/fstab` for Persistent Mounts
-
-Get the UUID of the devices.
-
-```sh
-sudo blkid
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/7bb73091-ed17-4a98-b47f-0cdb07278366)
-
-Update `/etc/fstab` with the UUIDs. Open the file with:
-
-```sh
-sudo nano /etc/fstab
+```bash
+sudo mkdir /mnt/apps
+sudo mkdir /mnt/logs
+sudo mkdir /mnt/opt
 ```
 
-Add the following lines (replace with your own UUIDs):
+### Mount the Logical Volumes
+- Mount the logical volumes to their respective directories.
 
-```plaintext
-UUID=<UUID-for-apps-lv> /var/www/html ext4 defaults 0 0
-UUID=<UUID-for-logs-lv> /var/log ext4 defaults 0 0
-```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/a16f3a18-3e0a-4167-8c73-7e1b38a739a5)
-
-### Test the Configuration
-
-```sh
-sudo mount -a
-sudo systemctl daemon-reload
+```bash
+sudo mount /dev/web_vg/lv-apps /mnt/apps
+sudo mount /dev/web_vg/lv-logs /mnt/logs
+sudo mount /dev/web_vg/lv-opt /mnt/opt
 ```
 
-Verify your setup by running:
+### Persist the Mounts
+- Add the mount configurations to `/etc/fstab` to ensure the volumes are mounted automatically after a reboot.
 
-```sh
-df -h
+```bash
+echo '/dev/web_vg/lv-apps /mnt/apps xfs defaults 0 0' | sudo tee -a /etc/fstab
+echo '/dev/web_vg/lv-logs /mnt/logs xfs defaults 0 0' | sudo tee -a /etc/fstab
+echo '/dev/web_vg/lv-opt /mnt/opt xfs defaults 0 0' | sudo tee -a /etc/fstab
 ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/2fd06ef5-12d1-49e4-bc7e-971e27b2bfdb)
+
+## Install and Configure NFS Server
+
+### Install NFS Server
+- Install the NFS utilities package.
+
+```bash
+sudo yum install nfs-utils -y
+```
+
+### Start and Enable NFS Server
+- Start the NFS server and enable it to start on boot.
+
+```bash
+sudo systemctl start nfs-server.service
+sudo systemctl enable nfs-server.service
+sudo systemctl status nfs-server.service
+```
+
+## Configure NFS Exports
+
+### Set Permissions
+- Set the correct ownership and permissions on the directories to be shared.
+
+```bash
+sudo chown -R nobody:nogroup /mnt/apps
+sudo chown -R nobody:nogroup /mnt/logs
+sudo chown -R nobody:nogroup /mnt/opt
+
+sudo chmod -R 777 /mnt/apps
+sudo chmod -R 777 /mnt/logs
+sudo chmod -R 777 /mnt/opt
+```
+
+### Configure Exports
+- Edit the `/etc/exports` file to export the directories over NFS to the specific subnet CIDR (replace `<Subnet-CIDR>` with the actual subnet CIDR, e.g., `172.31.32.0/20`).
+
+```bash
+sudo nano /etc/exports
+
+/mnt/apps <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+/mnt/logs <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+/mnt/opt <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+
+# Save and exit the editor (Ctrl+O, Enter, Ctrl+X)
+```
+
+### Apply Export Changes
+- Apply the NFS export changes.
+
+```bash
+sudo exportfs -arv
+```
+
+## Configure Security Groups
+
+### Open NFS Ports
+- Check which ports NFS is using and open them in your EC2 security group.
+
+```bash
+rpcinfo -p | grep nfs
+```
+
+- Ensure the following ports are open in your security group:
+  - TCP 111
+  - UDP 111
+  - UDP 2049
+
+## Final Verification
+
+### Restart NFS Server
+- Restart the NFS server to ensure all configurations are applied correctly.
+
+```bash
+sudo systemctl restart nfs-server.service
+```
+
+### Verify NFS Exports
+- Verify that the directories are correctly exported.
+
+```bash
+showmount -e
+```
+
+Now your NFS server is ready and configured to share directories with web servers and Jenkins within the specified subnet. The NFS server will automatically start on reboot, and the logical volumes will be mounted as per the configuration.
 
