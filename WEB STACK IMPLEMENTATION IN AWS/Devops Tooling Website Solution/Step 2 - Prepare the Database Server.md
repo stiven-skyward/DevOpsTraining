@@ -1,149 +1,207 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-### Step 2 - Prepare the Database Server
+# Configuring a MySQL Database Server and Web Servers for a DevOps Solution
 
-1. **Launch a second RedHat EC2 instance** that will have the role of 'DB Server'.
-2. **Repeat the same steps as for the Web Server**, but instead of `apps-lv`, create `db-lv` and mount it to the `/db` directory instead of `/var/www/html/`.
+## Step 2: Configure the Database Server
 
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/063f4d93-4d4b-420c-9fdf-5042c5e83327)
+### 2.1 Install MySQL Server
+- Launch a new EC2 instance with the RHEL 8 Operating System.
+- SSH into the instance and install MySQL server using the following commands:
 
-### Step 3 — Install WordPress on your Web Server EC2
+```bash
+sudo yum -y update
+sudo yum install mysql-server -y
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+```
 
-1. **Update the repository**:
-    ```sh
-    sudo yum -y update
-    ```
+### 2.2 Secure MySQL Installation
+- Run the MySQL secure installation to set the root password and secure the installation:
 
-2. **Install wget, Apache, and its dependencies**:
-    ```sh
-    sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
-    ```
+```bash
+sudo mysql_secure_installation
+```
+Follow the prompts to configure your MySQL instance securely.
 
-3. **Start Apache**:
-    ```sh
-    sudo systemctl enable httpd
-    sudo systemctl start httpd
-    ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/8c0e00e0-814a-4ef4-85ed-3c3c44f93a08)
+### 2.3 Create the Database and User
+- Log in to MySQL as the root user:
 
-4. **To install PHP and its dependencies**:
-    ```sh
-    sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-    sudo yum install yum-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
-    sudo yum module list php
-    sudo yum module reset php
-    sudo yum module enable php:remi-7.4
-    sudo yum install php php-opcache php-gd php-curl php-mysqlnd
-    sudo systemctl start php-fpm
-    sudo systemctl enable php-fpm
-    sudo setsebool -P httpd_execmem 1
-    ```
+```bash
+sudo mysql -u root -p
+```
 
-5. **Restart Apache**:
-    ```sh
-    sudo systemctl restart httpd
-    ```
+- Create the `tooling` database:
 
-6. **Download WordPress and copy it to /var/www/html**:
-    ```sh
-    mkdir wordpress
-    cd wordpress
-    sudo wget http://wordpress.org/latest.tar.gz
-    sudo tar xzvf latest.tar.gz
-    sudo rm -rf latest.tar.gz
-    cp wordpress/wp-config-sample.php wordpress/wp-config.php
-    cp -R wordpress /var/www/html/
-    ```
+```sql
+CREATE DATABASE tooling;
+```
 
-7. **Configure SELinux Policies**:
-    ```sh
-    sudo chown -R apache:apache /var/www/html/wordpress
-    sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
-    sudo setsebool -P httpd_can_network_connect=1
-    ```
+- Create a user `webaccess` that can only connect from the web server's subnet CIDR (replace `<Subnet-CIDR>` with your actual subnet CIDR, e.g., `172.31.32.0/20`):
 
-### Step 4 — Install MySQL on your DB Server EC2
+```sql
+CREATE USER 'webaccess'@'<Subnet-CIDR>' IDENTIFIED BY 'your_password';
+```
 
-1. **Update the repository**:
-    ```sh
-    sudo yum update
-    ```
+- Grant permissions to `webaccess` on the `tooling` database:
 
-2. **Install MySQL Server**:
-    ```sh
-    sudo yum install mysql-server
-    ```
+```sql
+GRANT ALL PRIVILEGES ON tooling.* TO 'webaccess'@'<Subnet-CIDR>';
+FLUSH PRIVILEGES;
+```
 
-3. **Verify that the service is up and running**:
-    ```sh
-    sudo systemctl status mysqld
-    ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/89c77710-8a88-4d3d-8755-f607a2a6411a)
+### 2.4 Verify the Database Configuration
+- Exit MySQL:
 
-4. **If it is not running, restart the service and enable it**:
-    ```sh
-    sudo systemctl restart mysqld
-    sudo systemctl enable mysqld
-    ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e3476049-516f-4c3c-ba95-ba8bc4194972)
+```sql
+EXIT;
+```
 
-### Step 5 — Configure DB to work with WordPress
+- Your database server is now configured and ready for remote access from the web servers.
 
-1. **Log in to MySQL**:
-    ```sh
-    sudo mysql
-    ```
+## Step 3: Prepare the Web Servers
 
-2. **Create a database and user for WordPress**:
-    ```sql
-    CREATE DATABASE wordpress;
-    CREATE USER 'myuser'@'<Web-Server-Private-IP-Address>' IDENTIFIED BY 'mypass';
-    GRANT ALL ON wordpress.* TO 'myuser'@'<Web-Server-Private-IP-Address>';
-    FLUSH PRIVILEGES;
-    SHOW DATABASES;
-    exit;
-    ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/df79f33e-c23a-4715-95aa-66344403f53e)
+### 3.1 Launch EC2 Instances for Web Servers
+- Launch three new EC2 instances with the RHEL 8 Operating System. These instances will serve as your web servers.
 
-### Step 6 — Configure WordPress to connect to remote database
+### 3.2 Install NFS Client on Web Servers
+- SSH into each web server instance and install the NFS client:
 
-1. **Open MySQL port 3306 on DB Server EC2**. Allow access ONLY from your Web Server's IP address.
-2. **Install MySQL client on the Web Server and test connection**:
-    ```sh
-    sudo yum install mysql
-    sudo mysql -u myuser -p -h <DB-Server-Private-IP-address>
-    ```
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f4d27008-0cd5-4896-8170-ae398ac6c79b)
+```bash
+sudo yum install nfs-utils nfs4-acl-tools -y
+```
 
-3. **Verify connection**:
-    ```sql
-    SHOW DATABASES;
-    ```
+### 3.3 Mount NFS Shares
+- Create the `/var/www` directory:
 
-4. **Edit the wp-config.php file in the WordPress Web-Server ec2 instance**:
-    - Open the file and edit.
-    ```sh
-    sudo nano /var/www/html/wordpress/wp-config.php
-    ```
-    - Change the default database connection details:
-    ```
-    define('DB_NAME', 'wordpress');
-    define('DB_USER', 'ec2-user');
-    define('DB_PASSWORD', 'mypass');
-    define('DB_HOST', '172.31.27.112');  // WebServer private IP
-    ```
+```bash
+sudo mkdir /var/www
+```
 
-5. **Change permissions and configuration so Apache can use WordPress**:
-    - Enable TCP port 80 in Inbound Rules configuration for your Web Server EC2.
+- Mount the NFS share from the NFS server (replace `<NFS-Server-Private-IP-Address>` with your NFS server’s private IP):
 
-6. **Access your WordPress installation**:
-    - Open your browser and navigate to `http://<Web-Server-Public-IP-Address>/wordpress/`.
+```bash
+sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/www
+```
 
-7. **If successful, you should see a screen for choosing the language and configuring the wordpress installation**
+- Verify the NFS mount with the following command:
 
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/e0a60713-6169-463b-8e28-a192e99dc3d2)
+```bash
+df -h
+```
 
-![image](https://github.com/stiven-skyward/DevOpsTraining/assets/135337796/f47dac0a-93e6-4cf3-ba6e-dc25bd8461f4)
+### 3.4 Make the NFS Mount Persistent
+- Open the `/etc/fstab` file to configure the NFS mount to persist after reboot:
 
-### Important: Do not forget to STOP your EC2 instances after completion of the project to avoid extra costs.
+```bash
+sudo nano /etc/fstab
+```
+
+- Add the following line (replace `<NFS-Server-Private-IP-Address>` with your NFS server’s private IP):
+
+```plaintext
+<NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0
+```
+
+### 3.5 Install Apache and PHP
+- Install Apache HTTP server:
+
+```bash
+sudo yum install httpd -y
+```
+
+- Install Remi's repository, PHP, and required PHP modules:
+
+```bash
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+sudo dnf module reset php
+sudo dnf module enable php:remi-7.4
+sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
+```
+
+- Start and enable PHP-FPM:
+
+```bash
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+```
+
+- Adjust SELinux settings for Apache:
+
+```bash
+sudo setsebool -P httpd_execmem 1
+```
+
+### 3.6 Verify the NFS Mount and Apache Configuration
+- Verify that the Apache files and directories are available in `/var/www` on all web servers. You can test by creating a file:
+
+```bash
+sudo touch /var/www/test.txt
+```
+
+- Check if the file `test.txt` is accessible on other web servers.
+
+### 3.7 Mount Apache Log Directory to NFS
+- Locate Apache log folder and mount it to the NFS server's export for logs:
+
+```bash
+sudo mkdir /var/log/httpd
+sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd
+```
+
+- Make the mount persistent:
+
+```bash
+sudo nano /etc/fstab
+```
+
+- Add the following line:
+
+```plaintext
+<NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd nfs defaults 0 0
+```
+
+### 3.8 Deploy the Tooling Application
+- Fork the tooling source code from StegHub GitHub Account to your GitHub account.
+- Clone the repository to your web server:
+
+```bash
+cd /var/www/html
+git clone https://github.com/<Your-GitHub-Username>/tooling.git .
+```
+
+- Ensure the `html` folder from the repository is deployed to `/var/www/html`.
+
+### 3.9 Configure the Website to Connect to the Database
+- Update the database connection settings in the `functions.php` file located in `/var/www/html`:
+
+```bash
+sudo nano /var/www/html/functions.php
+```
+
+- Apply the `tooling-db.sql` script to your database:
+
+```bash
+mysql -h <database-private-ip> -u webaccess -p tooling < tooling-db.sql
+```
+
+### 3.10 Create Admin User in MySQL
+- Log in to MySQL and create a new admin user:
+
+```sql
+INSERT INTO 'users' ('id', 'username', 'password', 'email', 'user_type', 'status') VALUES (1, 'myuser', '5f4dcc3b5aa765d61d8327deb882cf99', 'user@mail.com', 'admin', '1');
+```
+
+### 3.11 Final Setup and Verification
+- Open port 80 on your web server’s security group.
+- Open the website in your browser using the web server’s public IP or DNS:
+
+```plaintext
+http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php
+```
+
+- Log in with the `myuser` credentials.
+
+Congratulations! You have successfully implemented a web solution for a DevOps team using the LAMP stack with remote Database and NFS servers.
+```
