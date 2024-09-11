@@ -17,6 +17,8 @@ sudo yum -y update
 ```
 ![image](https://github.com/user-attachments/assets/c1345e17-4ce5-446d-81a4-aae109471b5b)
 
+![image](https://github.com/user-attachments/assets/04a56574-9faa-405c-a382-feca5ae40095)
+
 ## Configure LVM on the Server
 
 ### Create Physical Volumes
