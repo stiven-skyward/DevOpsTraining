@@ -6,7 +6,7 @@
 ## Step 2: Configure the Database Server
 
 ### 2.1 Install MySQL Server
-- Launch a new EC2 instance with the RHEL 8 Operating System.
+- Launch a new EC2 instance with the RHEL 9 Operating System.
 - SSH into the instance and install MySQL server using the following commands:
 
 ```bash
@@ -62,7 +62,7 @@ EXIT;
 ## Step 3: Prepare the Web Servers
 
 ### 3.1 Launch EC2 Instances for Web Servers
-- Launch three new EC2 instances with the RHEL 8 Operating System. These instances will serve as your web servers.
+- Launch three new EC2 instances with the RHEL 9 Operating System. These instances will serve as your web servers.
 
 ### 3.2 Install NFS Client on Web Servers
 - SSH into each web server instance and install the NFS client:
