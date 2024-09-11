@@ -15,6 +15,7 @@
 ```bash
 sudo yum -y update
 ```
+![image](https://github.com/user-attachments/assets/c1345e17-4ce5-446d-81a4-aae109471b5b)
 
 ## Configure LVM on the Server
 
