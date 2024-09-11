@@ -179,7 +179,7 @@ sudo nano /etc/exports
 ```bash
 sudo exportfs -arv
 ```
-![image](https://github.com/user-attachments/assets/82145540-f534-4300-bea7-0b4c60cdd708)
+![image](https://github.com/user-attachments/assets/f1d5aafe-b21b-4c89-b152-fe158e4bfe7d)
 
 ## Configure Security Groups
 
