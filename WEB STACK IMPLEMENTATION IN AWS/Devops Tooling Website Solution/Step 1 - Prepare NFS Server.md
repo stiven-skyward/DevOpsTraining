@@ -21,12 +21,52 @@ sudo yum -y update
 
 ## Configure LVM on the Server
 
+### Attach Volumes to the EC2 Instance
+
+Attach all three volumes one by one to your Web Server EC2 instance.
+
+![image](https://github.com/user-attachments/assets/4a28dbb2-f21f-4901-91e1-8e60472c5170)
+
+### Inspect Block Devices
+
+Use the `lsblk` command to inspect what block devices are attached to the server. Notice the names of your newly created devices. All devices in Linux reside in the `/dev/` directory. Inspect it with `ls /dev/` and make sure you see all 3 newly created block devices there - their names will likely be `xvdf`, `xvdh`, and `xvdg`.
+
+```sh
+lsblk
+ls /dev/
+```
+![image](https://github.com/user-attachments/assets/fcfaca86-47f2-4ff0-ba9a-7bc7b15577cf)
+
+### View Mounts and Free Space
+
+Use the `df -h` command to see all mounts and free space on your server.
+
+```sh
+df -h
+```
+![image](https://github.com/user-attachments/assets/aa805f69-d91f-4a64-b8b0-fa4bb93d7f52)
+
+### Install `lvm2` Package
+
+Install the `lvm2` package and check for available partitions.
+
+```sh
+sudo yum install lvm2
+sudo lvmdiskscan
+```
+![image](https://github.com/user-attachments/assets/60664152-5f7b-4d4b-9f1f-f50bcd3811e2)
+
+![image](https://github.com/user-attachments/assets/4a2a4c1f-760f-4a1c-afb2-a00bd1e0e205)
+
 ### Create Physical Volumes
 - Identify the additional disks attached to your EC2 instance and create physical volumes (PVs) using `pvcreate`.
 
-```bash
-sudo pvcreate /dev/xvdb /dev/xvdc /dev/xvdd
+```sh
+sudo pvcreate /dev/xvdb1
+sudo pvcreate /dev/xvdc1
+sudo pvcreate /dev/xvdd1
 ```
+![image](https://github.com/user-attachments/assets/e141711b-f2a6-40f2-a64e-94cd3602c1a1)
 
 ### Create a Volume Group
 - Create a Volume Group (VG) named `web_vg` that includes the physical volumes.
@@ -93,6 +133,7 @@ echo '/dev/web_vg/lv-opt /mnt/opt xfs defaults 0 0' | sudo tee -a /etc/fstab
 ```bash
 sudo yum install nfs-utils -y
 ```
+![image](https://github.com/user-attachments/assets/8d52caf8-5901-45c0-94ed-bfb20d8303da)
 
 ### Start and Enable NFS Server
 - Start the NFS server and enable it to start on boot.
@@ -102,6 +143,7 @@ sudo systemctl start nfs-server.service
 sudo systemctl enable nfs-server.service
 sudo systemctl status nfs-server.service
 ```
+![image](https://github.com/user-attachments/assets/a407d534-4887-4aed-a9b4-a8366041b856)
 
 ## Configure NFS Exports
 
@@ -109,9 +151,9 @@ sudo systemctl status nfs-server.service
 - Set the correct ownership and permissions on the directories to be shared.
 
 ```bash
-sudo chown -R nobody:nogroup /mnt/apps
-sudo chown -R nobody:nogroup /mnt/logs
-sudo chown -R nobody:nogroup /mnt/opt
+sudo chown -R nobody:nobody /mnt/apps
+sudo chown -R nobody:nobody /mnt/logs
+sudo chown -R nobody:nobody /mnt/opt
 
 sudo chmod -R 777 /mnt/apps
 sudo chmod -R 777 /mnt/logs
@@ -137,6 +179,7 @@ sudo nano /etc/exports
 ```bash
 sudo exportfs -arv
 ```
+![image](https://github.com/user-attachments/assets/82145540-f534-4300-bea7-0b4c60cdd708)
 
 ## Configure Security Groups
 
@@ -151,6 +194,8 @@ rpcinfo -p | grep nfs
   - TCP 111
   - UDP 111
   - UDP 2049
+    
+![image](https://github.com/user-attachments/assets/b34e5140-f529-424a-9980-3930c574ee49)
 
 ## Final Verification
 
