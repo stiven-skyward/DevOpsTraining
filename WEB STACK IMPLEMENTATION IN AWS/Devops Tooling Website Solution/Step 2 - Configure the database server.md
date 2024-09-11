@@ -89,6 +89,7 @@ sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/ww
 ```bash
 df -h
 ```
+![image](https://github.com/user-attachments/assets/5d41760b-79e8-4fc8-8350-dfef2131af06)
 
 ### 3.4 Make the NFS Mount Persistent
 - Open the `/etc/fstab` file to configure the NFS mount to persist after reboot:
@@ -102,6 +103,7 @@ sudo nano /etc/fstab
 ```plaintext
 <NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0
 ```
+![image](https://github.com/user-attachments/assets/48692839-06c2-4cea-a1b0-bcf775a1ca71)
 
 ### 3.5 Install Apache and PHP
 - Install Apache HTTP server:
@@ -113,8 +115,8 @@ sudo yum install httpd -y
 - Install Remi's repository, PHP, and required PHP modules:
 
 ```bash
-sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm
 sudo dnf module reset php
 sudo dnf module enable php:remi-7.4
 sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
