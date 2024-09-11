@@ -6,7 +6,7 @@
 ## Step 1: Launch and Prepare the EC2 Instance
 
 ### Spin up a New EC2 Instance
-- Launch a new EC2 instance in AWS using the RHEL 8 Operating System.
+- Launch a new EC2 instance in AWS using the RHEL 9 Operating System.
 - Ensure that the instance is in the correct VPC and subnet with the necessary security group configurations to allow SSH access.
 
 ### Update the System
