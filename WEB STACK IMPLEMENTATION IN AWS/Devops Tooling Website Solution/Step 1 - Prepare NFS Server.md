@@ -1,7 +1,7 @@
 # DevOpsTraining
 **DevOps/Cloud Training Material**
 
-# NFS Server Configuration on RHEL 8 for Web Servers and Jenkins
+# NFS Server Configuration on RHEL 9 for Web Servers and Jenkins
 
 ## Step 1: Launch and Prepare the EC2 Instance
 
