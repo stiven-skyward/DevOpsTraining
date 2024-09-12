@@ -172,6 +172,7 @@ sudo nano /etc/fstab
 ```plaintext
 <NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd nfs defaults 0 0
 ```
+![image](https://github.com/user-attachments/assets/e5c0dc23-8474-4f0d-a14e-27a35400e402)
 
 ### 3.8 Deploy the Tooling Application
 - Fork the tooling source code from StegHub GitHub Account to your GitHub account.
@@ -179,7 +180,12 @@ sudo nano /etc/fstab
 
 ```bash
 cd /var/www/html
-git clone https://github.com/<Your-GitHub-Username>/tooling.git .
+sudo dnf install git
+git --version
+sudo git clone https://github.com/StegTechHub/tooling.git .
+sudo mv /var/www/html/html/* /var/www/html/
+sudo rm -rf /var/www/html/html
+ls /var/www/html
 ```
 
 - Ensure the `html` folder from the repository is deployed to `/var/www/html`.
@@ -190,6 +196,7 @@ git clone https://github.com/<Your-GitHub-Username>/tooling.git .
 ```bash
 sudo nano /var/www/html/functions.php
 ```
+![image](https://github.com/user-attachments/assets/c6f7799a-6e28-4f0c-a52b-d6c26f7220a6)
 
 - Apply the `tooling-db.sql` script to your database:
 
@@ -201,6 +208,8 @@ mysql -h <database-private-ip> -u webaccess -p tooling < tooling-db.sql
 - Log in to MySQL and create a new admin user:
 
 ```sql
+mysql -h 172.31.83.110 -u webaccess -p tooling
+
 INSERT INTO 'users' ('id', 'username', 'password', 'email', 'user_type', 'status') VALUES (1, 'myuser', '5f4dcc3b5aa765d61d8327deb882cf99', 'user@mail.com', 'admin', '1');
 ```
 
@@ -214,5 +223,8 @@ http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php
 
 - Log in with the `myuser` credentials.
 
-Congratulations! You have successfully implemented a web solution for a DevOps team using the LAMP stack with remote Database and NFS servers.
+![image](https://github.com/user-attachments/assets/75aa1b22-b245-49ba-9ba1-f84e6d329f2d)
+
+![image](https://github.com/user-attachments/assets/692a25a7-16d0-44a9-b5ec-8594541d9222)
+
 ```
