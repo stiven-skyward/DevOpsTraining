@@ -6,7 +6,7 @@
 ## Step 2: Configure the Database Server
 
 ### 2.1 Install MySQL Server
-- Launch a new EC2 instance with the RHEL 8 Operating System.
+- Launch a new EC2 instance with the RHEL 9 Operating System.
 - SSH into the instance and install MySQL server using the following commands:
 
 ```bash
@@ -62,12 +62,13 @@ EXIT;
 ## Step 3: Prepare the Web Servers
 
 ### 3.1 Launch EC2 Instances for Web Servers
-- Launch three new EC2 instances with the RHEL 8 Operating System. These instances will serve as your web servers.
+- Launch three new EC2 instances with the RHEL 9 Operating System. These instances will serve as your web servers.
 
 ### 3.2 Install NFS Client on Web Servers
 - SSH into each web server instance and install the NFS client:
 
 ```bash
+sudo yum install nano -y
 sudo yum install nfs-utils nfs4-acl-tools -y
 ```
 
@@ -89,6 +90,7 @@ sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/ww
 ```bash
 df -h
 ```
+![image](https://github.com/user-attachments/assets/5d41760b-79e8-4fc8-8350-dfef2131af06)
 
 ### 3.4 Make the NFS Mount Persistent
 - Open the `/etc/fstab` file to configure the NFS mount to persist after reboot:
@@ -102,6 +104,7 @@ sudo nano /etc/fstab
 ```plaintext
 <NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0
 ```
+![image](https://github.com/user-attachments/assets/48692839-06c2-4cea-a1b0-bcf775a1ca71)
 
 ### 3.5 Install Apache and PHP
 - Install Apache HTTP server:
@@ -110,13 +113,16 @@ sudo nano /etc/fstab
 sudo yum install httpd -y
 ```
 
-- Install Remi's repository, PHP, and required PHP modules:
+- Install PHP, and required PHP modules:
 
 ```bash
-sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+# Reset the PHP module if needed
 sudo dnf module reset php
-sudo dnf module enable php:remi-7.4
+
+# Enable PHP 8.2
+sudo dnf module enable php:8.2
+
+# Install PHP 8.2 and required modules
 sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
 ```
 
@@ -139,8 +145,13 @@ sudo setsebool -P httpd_execmem 1
 ```bash
 sudo touch /var/www/test.txt
 ```
+![image](https://github.com/user-attachments/assets/656d3365-150d-4979-8200-9b3bdbd7a2a0)
 
 - Check if the file `test.txt` is accessible on other web servers.
+
+![image](https://github.com/user-attachments/assets/208bbcf0-60f4-4936-8cd8-03c2ef95a5af)
+
+![image](https://github.com/user-attachments/assets/1732f108-c485-451d-ac38-8d874b5387a6)
 
 ### 3.7 Mount Apache Log Directory to NFS
 - Locate Apache log folder and mount it to the NFS server's export for logs:
@@ -161,6 +172,7 @@ sudo nano /etc/fstab
 ```plaintext
 <NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd nfs defaults 0 0
 ```
+![image](https://github.com/user-attachments/assets/e5c0dc23-8474-4f0d-a14e-27a35400e402)
 
 ### 3.8 Deploy the Tooling Application
 - Fork the tooling source code from StegHub GitHub Account to your GitHub account.
@@ -168,7 +180,12 @@ sudo nano /etc/fstab
 
 ```bash
 cd /var/www/html
-git clone https://github.com/<Your-GitHub-Username>/tooling.git .
+sudo dnf install git
+git --version
+sudo git clone https://github.com/StegTechHub/tooling.git .
+sudo mv /var/www/html/html/* /var/www/html/
+sudo rm -rf /var/www/html/html
+ls /var/www/html
 ```
 
 - Ensure the `html` folder from the repository is deployed to `/var/www/html`.
@@ -179,6 +196,7 @@ git clone https://github.com/<Your-GitHub-Username>/tooling.git .
 ```bash
 sudo nano /var/www/html/functions.php
 ```
+![image](https://github.com/user-attachments/assets/c6f7799a-6e28-4f0c-a52b-d6c26f7220a6)
 
 - Apply the `tooling-db.sql` script to your database:
 
@@ -190,6 +208,8 @@ mysql -h <database-private-ip> -u webaccess -p tooling < tooling-db.sql
 - Log in to MySQL and create a new admin user:
 
 ```sql
+mysql -h 172.31.83.110 -u webaccess -p tooling
+
 INSERT INTO 'users' ('id', 'username', 'password', 'email', 'user_type', 'status') VALUES (1, 'myuser', '5f4dcc3b5aa765d61d8327deb882cf99', 'user@mail.com', 'admin', '1');
 ```
 
@@ -203,5 +223,8 @@ http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php
 
 - Log in with the `myuser` credentials.
 
-Congratulations! You have successfully implemented a web solution for a DevOps team using the LAMP stack with remote Database and NFS servers.
+![image](https://github.com/user-attachments/assets/75aa1b22-b245-49ba-9ba1-f84e6d329f2d)
+
+![image](https://github.com/user-attachments/assets/692a25a7-16d0-44a9-b5ec-8594541d9222)
+
 ```
