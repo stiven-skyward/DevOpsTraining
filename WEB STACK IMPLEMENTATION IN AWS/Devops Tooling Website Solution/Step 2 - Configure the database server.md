@@ -68,6 +68,7 @@ EXIT;
 - SSH into each web server instance and install the NFS client:
 
 ```bash
+sudo yum install nano -y
 sudo yum install nfs-utils nfs4-acl-tools -y
 ```
 
@@ -112,13 +113,16 @@ sudo nano /etc/fstab
 sudo yum install httpd -y
 ```
 
-- Install Remi's repository, PHP, and required PHP modules:
+- Install PHP, and required PHP modules:
 
 ```bash
-sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+# Reset the PHP module if needed
 sudo dnf module reset php
-sudo dnf module enable php:remi-7.4
+
+# Enable PHP 8.2
+sudo dnf module enable php:8.2
+
+# Install PHP 8.2 and required modules
 sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
 ```
 
@@ -141,8 +145,13 @@ sudo setsebool -P httpd_execmem 1
 ```bash
 sudo touch /var/www/test.txt
 ```
+![image](https://github.com/user-attachments/assets/656d3365-150d-4979-8200-9b3bdbd7a2a0)
 
 - Check if the file `test.txt` is accessible on other web servers.
+
+![image](https://github.com/user-attachments/assets/208bbcf0-60f4-4936-8cd8-03c2ef95a5af)
+
+![image](https://github.com/user-attachments/assets/1732f108-c485-451d-ac38-8d874b5387a6)
 
 ### 3.7 Mount Apache Log Directory to NFS
 - Locate Apache log folder and mount it to the NFS server's export for logs:
